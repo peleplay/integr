@@ -7,13 +7,15 @@
 Entropy(df, classAtt)
 }
 \arguments{
-\item{df}{A dataframe (discrete!) (name, string)}
+\item{df}{A (discrete) dataframe}
 
-\item{classAtt}{A class column of the df (name, string)}
+\item{classAtt}{A class column of the df (string)}
 }
 \value{
-the Shannon's entropy of \code{df} based on \code{classAtt}
+The Shannon's entropy of \code{df}, based on the \code{classAtt}
+  attribute
 }
 \description{
-Calculates Shannon's entropy
+Formula: \eqn{H(S) = -P_i * \sum log_2 * P_i}, where \eqn{P_i} is the
+probability of the corresponding \eqn{i}-th class
 }

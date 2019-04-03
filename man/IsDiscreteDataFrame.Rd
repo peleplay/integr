@@ -2,7 +2,7 @@
 % Please edit documentation in R/helpingFunctions.R
 \name{IsDiscreteDataFrame}
 \alias{IsDiscreteDataFrame}
-\title{Tests if all columns of the data.frame are discrete (i.e. factors)}
+\title{Tests if data.frame is discrete (i.e. all of its columns are factors)}
 \usage{
 IsDiscreteDataFrame(df)
 }
@@ -10,9 +10,10 @@ IsDiscreteDataFrame(df)
 \item{df}{A data frame}
 }
 \value{
-Boolean: TRUE if \code{obj} all columns of the data frame \code{df}
-are factors, FALSE otherwise
+Boolean: TRUE if all columns of the data frame \code{df}
+are factors, FALSE otherwise; If the provided \code{df} object is of other
+type than data.frame, the function returns FALSE.
 }
 \description{
-Tests if all columns of the data.frame are discrete (i.e. factors)
+Tests if data.frame is discrete (i.e. all of its columns are factors)
 }
