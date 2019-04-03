@@ -16,3 +16,4 @@ URL: https://github.com/peleplay/integr
 BugReports: https://github.com/peleplay/integr/issues
 Imports: 
     dplyr (>= 0.7.6)
+RoxygenNote: 6.1.1
