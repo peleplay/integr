@@ -2,14 +2,15 @@ Package: integr
 Type: Package
 Title: An Implementation of Interaction Graphs of Aleks Jakulin
 Version: 0.0.0.9000
-Authors@R: person("Petar", "Markovic", email = "peleplay at gmail.com",
+Authors@R: person("Petar", "Markovic", email = "peleplay@gmail.com",
                   role = c("aut", "cre"))
 Description: An Implementation of Interaction Graphs of Ales Jakulin
-    (http://stat.columbia.edu/~jakulin/Int/), based on implementation in 
-    Orange 2 (https://orange.biolab.si/). It generates a graphviz graph 
-    consisting of 3-way positive and negative interactions (conditional 
-    Information gain) from a dataframe of discrete variables. Update...
+    (http://stat.columbia.edu/~jakulin/Int/). It generates a graphviz 
+    graph consisting of 3-way interactions (i.e. conditional Information Gain) 
+    based on a provided dataframe of discrete variables. 
 Depends: R (>= 3.5.1)
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
+URL: https://github.com/peleplay/integr
+BugReports: https://github.com/peleplay/integr/issues
