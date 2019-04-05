@@ -65,7 +65,7 @@ InfoGain <- function(df, inAtt, classAtt){
 #' @param df A data frame
 #' @return Boolean: TRUE if all columns of the data frame \code{df}
 #' are factors, FALSE otherwise; If the provided \code{df} object is of other
-#' type than data.frame, the function returns FALSE.
+#' type than data.frame, the function throws an error.
 
 IsDiscreteDataFrame <- function(df){
 
@@ -82,8 +82,8 @@ IsDiscreteDataFrame <- function(df){
 
   }
 
-  #not a data.frame, return FALSE
+  #not a data.frame, stop!
   else{
-    return(FALSE)
+    stop("The provided object is not a data.frame!")
   }
 }
