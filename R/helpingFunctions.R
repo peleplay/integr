@@ -8,7 +8,7 @@
 #' @return The Shannon's entropy of \code{df}, based on the \code{classAtt}
 #'   attribute
 
-Entropy <- function(df, classAtt){
+entropy <- function(df, classAtt) {
   freq <- table(df[classAtt]) #vector of class frequencies
   prob <- round(freq / sum(freq), 3) #vector of class probabilities
   logs <- log2(prob) * (-1) #vector of logarithms of class probabilities
@@ -28,8 +28,8 @@ Entropy <- function(df, classAtt){
 #' @return The Information Gain of \code{df} on the class attribute
 #'   \code{classAtt}
 
-InfoGain <- function(df, inAtt, classAtt){
-  apr <- Entropy(df, classAtt) #a-priori entropy of the df
+infoGain <- function(df, inAtt, classAtt) {
+  apr <- entropy(df, classAtt) #a-priori entropy of the df
 
   #Frequency table for the new attribute
   freqA <- df %>%
@@ -67,13 +67,13 @@ InfoGain <- function(df, inAtt, classAtt){
 #' are factors, FALSE otherwise; If the provided \code{df} object is of other
 #' type than data.frame, the function throws an error.
 
-IsDiscreteDataFrame <- function(df){
+isDiscreteDataFrame <- function(df) {
 
   #Check if df is data.frame
-  if(is.data.frame(df)){
+  if (is.data.frame(df)) {
 
     #Check if there is a non-discrete column; If there is, return FALSE
-    if(FALSE %in% sapply(df, is.factor)){
+    if (FALSE %in% sapply(df, is.factor)) {
       return(FALSE)
     }
 
@@ -83,7 +83,7 @@ IsDiscreteDataFrame <- function(df){
   }
 
   #not a data.frame, stop!
-  else{
+  else {
     stop("The provided object is not a data.frame!")
   }
 }
