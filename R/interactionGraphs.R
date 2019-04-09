@@ -1,3 +1,148 @@
+#Define Interaction graph nodes S3 class, constructor & generic methods ----
+
+#' Constructs Interaction Graph Nodes (S3 class)
+#'
+#' @param n igNode.name \code{(character)}
+#' @param v igNode.value \code{(double)} (i.e. 2-way Interaction Gain)
+#' @return An instance of the \code{igNode} class
+
+igNode <- function(n, v){
+
+  #Check validity of the input
+  if (typeof(n) != "character") { #igNode name is not string
+    stop("Interaction graph Node.name must be of type character")
+  }
+
+  if (typeof(v) != "double"){ #igNode value is not double
+    stop("Interaction graph Node.value must be of type double")
+  }
+
+  #Define class
+  val <- list(name = n, value = v)
+
+  #Set class name
+  attr(val, "class") <- "igNode"
+
+  #Create object
+  return(val)
+
+}
+
+#Print.igNode() generic
+print.igNode <- function(node) {
+  cat(paste0("\t", node$name, " ", "[label='", node$name, " \\n ",
+             node$value, "%'] ; \n"))
+}
+
+#TODO: add paste generic method
+
+
+#Define Interaction graph edges s3 class, constructor & generic methods ----
+
+#' Constructs Interaction Graph Edges (S3 class)
+#'
+#' @param n1 igEdge.node1 \code{(character)}
+#' @param n2 igEdge.node2 \code{(character)}
+#' @param w igEdge.weight \code{(double)} (i.e. 3-way Interaction Gain)
+#' @return An instance of the \code{igEdge} class
+
+igEdge <- function(n1, n2, w) {
+
+  #Check validity of the input
+  if (typeof(n1) != "character") { #igEdge.node1 name is not string
+    stop("Interaction graph Edge.Node1 name must be of type character")
+  }
+
+  if (typeof(n2) != "character") { #igEdge.node2 name is not string
+    stop("Interaction graph Edge.Node2 name must be of type character")
+  }
+
+  if (typeof(w) != "double") { #igNode weight is not double
+    stop("Interaction graph Edge.weight must be of type double")
+  }
+
+  #Define class
+  val <- list(node1 = n1, node2 = n2, weight = w)
+
+  #Set class name
+  attr(val, "class") <- "igEdge"
+
+  #Create object
+  return(val)
+}
+
+#Print.igEdge() generic
+print.igEdge <- function(edge) {
+
+  if (edge$weight < 0) { #print string for negative edges
+    cat(paste0("\t", egde$node1, " -> " , edge$node2,
+              " [labeldistance=2.5, labelangle=-45, label='", edge$weight,
+              "%', color='red', dir='none'] ; \n"))
+  }
+
+  else { #print string for positive edges
+    cat(paste0("\t", egde$node1, " -> " , egde$node2,
+              " [labeldistance=2.5, labelangle=-45, label='", edge$weight,
+              "%', color='green', dir='both'] ; \n"))
+  }
+}
+
+#TODO: add paste generic method
+
+#Define Interaction graph s3 class, constructor & generic methods ----
+
+#' Constructs Interaction Graph (S3 class)
+#'
+#' @param n ig.nodes \code{(a list of igNode-s)}
+#' @param ne ig.negEdges \code{(a list of negative igEdge-s)}
+#' @param pe ig.posEdges \code{(a list of negative igEdge-s)}
+#' @return An instance of the \code{ig} class
+
+ig <- function(n, ne, pe){
+
+  #Check validity of the input
+  if (class(n) != "igNode") { #not an int. graph node
+    stop("Not an Interaction graph node!")
+  }
+
+  if (class(ne) != "igEdge" || class(pe) != "igEdge") { #not an int. graph edge
+    stop("Not an Interaction graph edge!")
+  }
+
+  #Define class
+  val <- list(head = "digraph InteractionGraph { \n
+              graph [overlap = scale, fontsize = 10, fontname = 'helvetica']; \n
+              node [shape=box, margin=0.1, fontname = 'helvetica'] ; \n
+              edge [fontname = 'helvetica'] ; \n", #header
+              nodes = n,
+              negEdges = ne,
+              posEdges = pe,
+              foot = "\n } \n") #footer
+
+  #Set class name
+  attr(val, "class") <- "ig"
+
+  #Create object
+  return(value)
+}
+
+#Print.ig() generic
+print.ig <- function(intGraph){
+  cat(intGraph$head) #print header of the graph
+  for (n in 1:length(intGraph$nodes)) { #print all nodes
+    print(intGraph$nodes[n])
+  }
+  for (ne in 1:length(intGraph$negEdges)) { #print negative edges
+    print(intGraph$nedEdges[ne])
+  }
+  for (pe in 1:length(intGraph$posEdges)) { #print positive edges
+    print(intGraph$posEdges[pe])
+  }
+  cat(intGraph$foot)
+}
+
+#TODO: add paste generic method
+
 #Calculate interactions ----
 
 #' Calculates 3-Way Interactions
