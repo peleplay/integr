@@ -20,7 +20,7 @@ entropy <- function(df, classAtt) {
 #'
 #' \eqn{InfoGAIN = H(S) - H(S|X)}, where \eqn{H(S)} is the difference in the
 #' Shannon's entropy of the system \eqn{S} before a new attribute \eqn{X} is
-#' introduced, and \qen{H(S|X)} is the entropy afterwards.
+#' introduced, and \eqn{H(S|X)} is the entropy afterwards.
 #'
 #' @param df A discrete dataframe
 #' @param inAtt An input column of the dataframe (string)
