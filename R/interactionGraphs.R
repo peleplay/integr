@@ -29,12 +29,28 @@ igNode <- function(n, v){
 }
 
 #Print.igNode() generic
+
+#' Print generic method for Interaction Graph Nodes (S3 class)
+#'
+#' @param node An \code{(igNode)} object
+#' @return Print \code{(igNode)} object
+
 print.igNode <- function(node) {
   cat(paste0("\t", node$name, " ", "[label='", node$name, " \\n ",
              node$value, "%'] ; \n"))
 }
 
-#TODO: add paste generic method
+#toString.igNode() generic method
+
+#' toString() generic method for Interaction Graph Nodes (S3 class)
+#'
+#' @param node An \code{(igNode)} object
+#' @return \code{(character)} object made of the provided \code{(igNode)} object
+
+toString.igNode <- function(node) {
+  return(paste0("\t", node$name, " ", "[label='", node$name, " \\n ",
+         node$value, "%'] ; \n"))
+}
 
 
 #Define Interaction graph edges s3 class, constructor & generic methods ----
@@ -72,6 +88,12 @@ igEdge <- function(n1, n2, w) {
 }
 
 #Print.igEdge() generic
+
+#' Print generic method for Interaction Graph Edges (S3 class)
+#'
+#' @param edge An \code{(igEdge)} object
+#' @return Print \code{(igEdge)} object
+
 print.igEdge <- function(edge) {
 
   if (edge$weight < 0) { #print string for negative edges
@@ -87,7 +109,26 @@ print.igEdge <- function(edge) {
   }
 }
 
-#TODO: add paste generic method
+#toString.igEdge() generic method
+
+#' toString() generic method for Interaction Graph Edges (S3 class)
+#'
+#' @param edge An \code{(igEdge)} object
+#' @return \code{(character)} object made of the provided \code{(igEdge)} object
+
+toString.igEdge <- function(edge) {
+  if (edge$weight < 0) { #return string for negative edges
+    return(paste0("\t", egde$node1, " -> " , edge$node2,
+               " [labeldistance=2.5, labelangle=-45, label='", edge$weight,
+               "%', color='red', dir='none'] ; \n"))
+  }
+
+  else { #return string for positive edges
+    return(paste0("\t", egde$node1, " -> " , egde$node2,
+               " [labeldistance=2.5, labelangle=-45, label='", edge$weight,
+               "%', color='green', dir='both'] ; \n"))
+  }
+}
 
 #Define Interaction graph s3 class, constructor & generic methods ----
 
@@ -127,6 +168,12 @@ ig <- function(n, ne, pe){
 }
 
 #Print.ig() generic
+
+#' Print generic method for Interaction Graph (S3 class)
+#'
+#' @param intGraph An \code{(ig)} object
+#' @return Print \code{(ig)} object
+
 print.ig <- function(intGraph){
   cat(intGraph$head) #print header of the graph
   for (n in 1:length(intGraph$nodes)) { #print all nodes
@@ -141,7 +188,43 @@ print.ig <- function(intGraph){
   cat(intGraph$foot)
 }
 
-#TODO: add paste generic method
+#toString.ig() generic method
+
+#' toString() generic method for Interaction Graph (S3 class)
+#'
+#' @param intGraph An \code{(ig)} object
+#' @return \code{(character)} object made of the provided \code{(ig)} object
+
+toString.ig <- function(intGraph) {
+
+  #init strings
+  nodes <- ""
+  negEdges <- ""
+  posEdges <- ""
+
+  for (n in 1:length(intGraph$nodes)) { #convert to string all nodes
+    nodes <- c(nodes, toString(intGraph$nodes[n]))
+  }
+  nodes <- paste(nodes, collapse = "") #paste all strings to a single string
+
+  for (ne in 1:length(intGraph$negEdges)) { #convert to string all neg. edges
+    negEdges <- c(negEdges, toString(intGraph$nedEdges[ne]))
+  }
+  negEdges <- paste(negEdges, collapse = "") #paste strings to a single string
+
+  for (pe in 1:length(intGraph$posEdges)) { #convert to string all pos. edges
+    posEdges <- c(posEdges, toString(intGraph$posEdges[pe]))
+  }
+  posEdges <- paste(posEdges, collapse = "") #paste strings to a single string
+
+  #Final graph string
+  return(paste0(intGraph$head,
+                nodes,
+                negEdges,
+                posEdges,
+                intGraph$foot))
+
+}
 
 #Calculate interactions ----
 
