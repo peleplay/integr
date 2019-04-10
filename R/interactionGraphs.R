@@ -421,7 +421,9 @@ interactionGraph <- function(df, classAtt, intNo = 16, precomputed = FALSE){
   #Create interaction graph object
   interGraph <- ig(nodes, lstNegEdges, lstPosEdges)
 
-  #Convert interaction graph object to string & return the object
-  return(toString(interGraph))
+  #Convert interaction graph object to string, plot & return the graphviz object
+  igGraphViz <- DiagrammeR::grViz(toString(interGraph))
+
+  return(igGraphViz) #return interaction graph as a graphviz object
 
 }
