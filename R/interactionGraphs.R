@@ -327,7 +327,7 @@ interactions3Way <- function(df, classAtt, speedUp = FALSE){
 
 }
 
-#TODO: create graph ----
+#Create interaction graph ----
 
 #' Creates Interaction graph
 #'
@@ -350,37 +350,78 @@ interactions3Way <- function(df, classAtt, speedUp = FALSE){
 
 interactionGraph <- function(df, classAtt, intNo = 16, precomputed = FALSE){
 
-    #Check if classAtt is not a string, and throw an error if true.
-    if (typeof(classAtt) != "character") {
-      stop("Class attribute name needs to be provided as a string!")
-    }
+  #Check if classAtt is not a string, and throw an error if true.
+  if (typeof(classAtt) != "character") {
+    stop("Class attribute name needs to be provided as a string!")
+  }
 
-    #check if intNo is not a number
-    if(typeof(intNo) != "double"){
-      stop("The number of interactions to calculate must be an integer in range
+  #check if intNo is not a number
+  if(typeof(intNo) != "double"){
+    stop("The number of interactions to calculate must be an integer in range
            [2,20]!")
-    }
+  }
 
-    #Check numerical correctness of intNo
-    if (intNo < 2) { #intNo is smaller than 2, make it minimal (i.e. 2)
-      intNo <- 2
-      warning("Parameter intNo was smaller than the minimum. It is scaled to fit
+  #Check numerical correctness of intNo
+  if (intNo < 2) { #intNo is smaller than 2, make it minimal (i.e. 2)
+    intNo <- 2
+    warning("Parameter intNo was smaller than the minimum. It is scaled to fit
               the range [2,20], and now it is 2")
-    }
+  }
 
-    if (intNo %% 2 != 0) { #intNo is odd, round it to the first closest largest
-      intNo <- intNo + 1
-      warning(paste0("Parameter intNo was odd. It is converted to even number,
+  if (intNo %% 2 != 0) { #intNo is odd, round it to the first closest largest
+    intNo <- intNo + 1
+    warning(paste0("Parameter intNo was odd. It is converted to even number,
                      and now is ", intNo))
-    }
+  }
 
-    if (intNo > 20) { #intNo is larger than 20, make it maximal (i.e. 20)
-      intNo <- 20
-      warning("Parameter intNo was larger than the maximum. It is scaled to fit
+  if (intNo > 20) { #intNo is larger than 20, make it maximal (i.e. 20)
+    intNo <- 20
+    warning("Parameter intNo was larger than the maximum. It is scaled to fit
               the range [2,20], and now it is 20")
-    }
+  }
 
-    #TODO: define interaction graph
+  #Define interaction graph ----
 
+  if (precomputed == FALSE) { #If raw data-frame is give, get interactions first
+    df <- interactions3Way(df, classAtt, speedUp)
+  }
+
+  #Sort interactions df w.r.t. interaction gain for positive edges
+  i <- df[order(df$InteractionGain),] #order df ascending w.r.t. inter. gain.
+  i$InteractionGain <- as.double(as.character(i$InteractionGain)) #format col.
+  pi <- i[1:(noInt/2),] #select upper half of interactions (i.e. positives)
+
+  #Create negative edges
+  #Sort interactions df and get lower half (i.e. positive interactions)
+  i <- i[order(-i$InteractionGain),] #order df ascending w.r.t inter. gain.
+  ni <- i[1:(noInt/2),] #select lower half of interactions (i.e. negatives)
+
+  #Final df of interactions rbind(, n2min)
+  iTotal <- rbind(ni, pi)
+
+  #Create nodes
+  nodes <- unique(c(as.character(iTotal[,1]), as.character(iTotal[,2])))
+  lstIgNodes <- list() #intiialize empty list of nodes
+  for (n in 1:length(nodes)) { #foreach node add corresp. igNode obj. to the lst
+    lstIgNodes[n] <- igNode(nodes[n], round(lst[[nodes[n]]] * 100, 2))
+  }
+
+  #Create negative edges
+  lstNegEdges <- list() #intiialize empty list of negative edges
+  for (ne in 1:nrow(ni)) { #foreach edge add corresp. igEdge obj. to the lst
+    lstNegEdges[ne] <- igEdge(ni[ne, 1], ni[ne, 2], round(ni[ne, 3] * 100, 2))
+  }
+
+  #Create positive edges
+  lstPosEdges <- list() #intiialize empty list of positive edges
+  for (pe in 1:nrow(pi)) { #foreach edge add corresp. igEdge obj. to the lst
+    lstPosEdges[pe] <- igEdge(pi[pe, 1], pi[pe, 2], round(pi[pe, 3] * 100, 2))
+  }
+
+  #Create interaction graph object
+  interGraph <- ig(nodes, lstNegEdges, lstPosEdges)
+
+  #Convert interaction graph object to string & return the object
+  return(toString(interGraph))
 
 }
