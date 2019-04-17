@@ -4,7 +4,7 @@
 \alias{igToGrViz}
 \title{Exports Interaction graph to a GraphViz file}
 \usage{
-igToGrViz(ig, path, fName = "InteractionGraph")
+igToGrViz(ig, path = getwd(), fName = "InteractionGraph")
 }
 \arguments{
 \item{ig}{Interaction graph}

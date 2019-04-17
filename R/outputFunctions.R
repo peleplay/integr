@@ -1,3 +1,13 @@
+#Plot graphviz
+#' Plots Interaction graph
+#'
+#' @param ig Interaction graph
+#' @return Plots the \code{ig}
+#' @export
+plotIntGraph <- function(ig) {
+  DiagrammeR::grViz(ig)
+}
+
 #Export graphviz ----
 
 #' Exports Interaction graph to a GraphViz file
@@ -11,7 +21,7 @@
 #'   to the specified folder in \code{path}
 #' @export
 
-igToGrViz <- function(ig, path, fName = "InteractionGraph") {
+igToGrViz <- function(ig, path = getwd(), fName = "InteractionGraph") {
 
   #Check input validity : Depreciated
   # if (typeof(ig) != "character" || grepl("InteractionGraph", ig) != TRUE) {
@@ -19,24 +29,28 @@ igToGrViz <- function(ig, path, fName = "InteractionGraph") {
   #   stop("Please provide Interaction graphs definition as the 'ig' parameter")
   # }
 
-  if (typeof(ig) != "htmlwidget") {
+  if (typeof(ig) != "character") {
     #the ig parameter does not point to InteractionGraph definition string
     stop("Please provide Interaction graphs definition as the 'ig' parameter")
   }
 
-  if (typeof(path) != "character" || grepl("\\", ig) == TRUE) {
+  if (typeof(path) != "character" || grepl("\\\\", path) == TRUE) {
     #the path parameter is not defined properly
     stop("The 'path' parameter is not properly set. It needs to be string and
          without \\ symbol in the path")
   }
 
-  if (typeof(fName) != "character" || grepl(" ", ig) == TRUE) {
+  if (typeof(fName) != "character" || grepl(" ", fName) == TRUE) {
     #the fName parameter is not defined properly
     stop("The 'fName' parameter is not a proper name for the interaction graph.
          It needs to be string and without empty spaces")
   }
 
   #Write ig to .gv binary
+  if(path == getwd()){ #Add trailing backslash if current wd is used
+    path <- paste0(path, "/")
+  }
+
   currGraph <- paste0(path, fName, ".gv") #set file name
   sink(currGraph) #open connection
   cat(ig) #write graphviz contents
@@ -70,18 +84,18 @@ igToSVG <- function(ig,
   #   stop("Please provide Interaction graphs definition as the 'ig' parameter")
   # }
 
-  if (typeof(ig) != "htmlwidget") {
+  if (typeof(ig) != "character") {
     #the ig parameter does not point to InteractionGraph definition string
     stop("Please provide Interaction graphs definition as the 'ig' parameter")
   }
 
-  if (typeof(path) != "character" || grepl("\\", ig) == TRUE) {
+  if (typeof(path) != "character" || grepl("\\", path) == TRUE) {
     #the path parameter is not defined properly
     stop("The 'path' parameter is not properly set. It needs to be string and
          without \\ symbol in the path")
   }
 
-  if (typeof(fName) != "character" || grepl(" ", ig) == TRUE) {
+  if (typeof(fName) != "character" || grepl(" ", fName) == TRUE) {
     #the fName parameter is not defined properly
     stop("The 'fName' parameter is not a proper name for the interaction graph.
          It needs to be string and without empty spaces")
@@ -127,18 +141,18 @@ igToPNG <- function(ig,
   #   stop("Please provide Interaction graphs definition as the 'ig' parameter")
   # }
 
-  if (typeof(ig) != "htmlwidget") {
+  if (typeof(ig) != "character") {
     #the ig parameter does not point to InteractionGraph definition string
     stop("Please provide Interaction graphs definition as the 'ig' parameter")
   }
 
-  if (typeof(path) != "character" || grepl("\\", ig) == TRUE) {
+  if (typeof(path) != "character" || grepl("\\", path) == TRUE) {
     #the path parameter is not defined properly
     stop("The 'path' parameter is not properly set. It needs to be string and
          without \\ symbol in the path")
   }
 
-  if (typeof(fName) != "character" || grepl(" ", ig) == TRUE) {
+  if (typeof(fName) != "character" || grepl(" ", fName) == TRUE) {
     #the fName parameter is not defined properly
     stop("The 'fName' parameter is not a proper name for the interaction graph.
          It needs to be string and without empty spaces")
@@ -194,13 +208,13 @@ igToPDF <- function(ig,
     stop("Please provide Interaction graphs definition as the 'ig' parameter")
   }
 
-  if (typeof(path) != "character" || grepl("\\", ig) == TRUE) {
+  if (typeof(path) != "character" || grepl("\\", path) == TRUE) {
     #the path parameter is not defined properly
     stop("The 'path' parameter is not properly set. It needs to be string and
          without \\ symbol in the path")
   }
 
-  if (typeof(fName) != "character" || grepl(" ", ig) == TRUE) {
+  if (typeof(fName) != "character" || grepl(" ", fName) == TRUE) {
     #the fName parameter is not defined properly
     stop("The 'fName' parameter is not a proper name for the interaction graph.
          It needs to be string and without empty spaces")
@@ -248,13 +262,13 @@ igToPS <- function(ig,
     stop("Please provide Interaction graphs definition as the 'ig' parameter")
   }
 
-  if (typeof(path) != "character" || grepl("\\", ig) == TRUE) {
+  if (typeof(path) != "character" || grepl("\\", path) == TRUE) {
     #the path parameter is not defined properly
     stop("The 'path' parameter is not properly set. It needs to be string and
          without \\ symbol in the path")
   }
 
-  if (typeof(fName) != "character" || grepl(" ", ig) == TRUE) {
+  if (typeof(fName) != "character" || grepl(" ", fName) == TRUE) {
     #the fName parameter is not defined properly
     stop("The 'fName' parameter is not a proper name for the interaction graph.
          It needs to be string and without empty spaces")
