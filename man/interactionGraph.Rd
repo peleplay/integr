@@ -4,7 +4,7 @@
 \alias{interactionGraph}
 \title{Creates Interaction graph}
 \usage{
-interactionGraph(df, classAtt, intNo = 16, precomputed = FALSE)
+interactionGraph(df, classAtt, intNo = 16, speedUp = FALSE)
 }
 \arguments{
 \item{df}{A (discrete) data.frame}
