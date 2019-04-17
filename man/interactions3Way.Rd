@@ -17,7 +17,8 @@ be pruned. This speeds up calculations for larger datasets. By default it
 is turned off (i.e. set to FALSE).}
 }
 \value{
-A data-frame with 3-way interactions
+A list with: 1) data-frame with 3-way interactions, 2)list of 2-way
+  interactions of input attributes
 }
 \description{
 Formula: \eqn{}, where \eqn{} is
