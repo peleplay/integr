@@ -1,7 +1,7 @@
 Package: integr
 Type: Package
 Title: An Implementation of Interaction Graphs of Aleks Jakulin
-Version: 0.0.0.9001
+Version: 0.0.0.9002
 Authors@R: person("Petar", "Markovic", email = "peleplay@gmail.com",
                   role = c("aut", "cre"))
 Description: An Implementation of Interaction Graphs of Aleks Jakulin
