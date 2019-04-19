@@ -4,8 +4,7 @@
 \alias{igToPDF}
 \title{Exports Interaction graph to a PDF file}
 \usage{
-igToPDF(ig, fName = "InteractionGraph", path = getwd(),
-  height = 2000)
+igToPDF(ig, fName = "InteractionGraph", path = getwd(), h = 2000)
 }
 \arguments{
 \item{ig}{Interaction graph}
@@ -16,7 +15,7 @@ default}
 \item{path}{The folder in which to write the PDF file; by default,
 the working directory}
 
-\item{height}{Desired height of the image in pixels; 2000px by default}
+\item{h}{Desired height of the image in pixels; 2000px by default}
 }
 \value{
 Writes the \code{ig} interaction graph to a PDF (\code{.pdf}) file

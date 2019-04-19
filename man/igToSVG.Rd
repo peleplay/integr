@@ -4,8 +4,7 @@
 \alias{igToSVG}
 \title{Exports Interaction graph to a SVG file}
 \usage{
-igToSVG(ig, path = getwd(), fName = "InteractionGraph",
-  height = 2000)
+igToSVG(ig, path = getwd(), fName = "InteractionGraph", h = 2000)
 }
 \arguments{
 \item{ig}{Interaction graph}
@@ -16,7 +15,7 @@ the working directory}
 \item{fName}{The name of the file to be created; "InteractionGraph" by
 default}
 
-\item{height}{Desired height of the image in pixels; 2000px by default}
+\item{h}{Desired height of the image in pixels; 2000px by default}
 }
 \value{
 Writes the \code{ig} interaction graph to a SVG (\code{.svg}) file

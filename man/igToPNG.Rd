@@ -4,8 +4,7 @@
 \alias{igToPNG}
 \title{Exports Interaction graph to a PNG file}
 \usage{
-igToPNG(ig, fName = "InteractionGraph", path = getwd(),
-  height = 2000, dpi = 300)
+igToPNG(ig, fName = "InteractionGraph", path = getwd(), h = 2000)
 }
 \arguments{
 \item{ig}{Interaction graph}
@@ -16,9 +15,7 @@ default}
 \item{path}{The folder in which to write the PNG file; by default,
 the working directory}
 
-\item{height}{Desired height of the image in pixels; 2000px by default}
-
-\item{dpi}{Desired resolution of the image in dpi; 300dpi by default}
+\item{h}{Desired height of the image in pixels; 2000px by default}
 }
 \value{
 Writes the \code{ig} interaction graph to a PNG (\code{.png}) file
