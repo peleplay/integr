@@ -7,15 +7,18 @@
 entropy(df, classAtt)
 }
 \arguments{
-\item{df}{A (discrete) data.frame}
+\item{df}{A discrete \code{data.frame}}
 
-\item{classAtt}{A class column of the df (string)}
+\item{classAtt}{A class column of the df (\code{string})}
 }
 \value{
-The Shannon's entropy of \code{df}, based on the \code{classAtt}
+The Shannon's entropy of the \code{df}, based on the \code{classAtt}
   attribute
 }
 \description{
 Formula: \eqn{H(S) = -P_i * \sum log_2 * P_i}, where \eqn{P_i} is the
 probability of the corresponding \eqn{i}-th class
+}
+\examples{
+\dontrun{entropy(golf, "Play")}
 }

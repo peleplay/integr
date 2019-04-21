@@ -11,7 +11,7 @@ igEdge(n1, n2, w)
 
 \item{n2}{igEdge.node2 \code{(character)}}
 
-\item{w}{igEdge.weight \code{(double)} (i.e. 3-way Interaction Gain)}
+\item{w}{igEdge.weight (i.e. 3-way Interaction Gain) \code{(double)}}
 }
 \value{
 An instance of the \code{igEdge} class

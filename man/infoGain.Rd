@@ -2,16 +2,16 @@
 % Please edit documentation in R/helpingFunctions.R
 \name{infoGain}
 \alias{infoGain}
-\title{Calculates Information Gain (2-way Interaction Gain) of a discrete dataframe}
+\title{Calculates Information Gain (2-way Interaction Gain) of a discrete data.frame}
 \usage{
 infoGain(df, inAtt, classAtt)
 }
 \arguments{
-\item{df}{A discrete dataframe}
+\item{df}{A discrete \code{data.frame}}
 
-\item{inAtt}{An input column of the dataframe (string)}
+\item{inAtt}{An input column of the data.frame \code{df} (\code{string})}
 
-\item{classAtt}{A class column of the dataframe (string)}
+\item{classAtt}{A class column of the data.frame \code{df} (\code{string})}
 }
 \value{
 The Information Gain of \code{df} on the class attribute
@@ -20,5 +20,9 @@ The Information Gain of \code{df} on the class attribute
 \description{
 \eqn{InfoGAIN = H(S) - H(S|X)}, where \eqn{H(S)} is the difference in the
 Shannon's entropy of the system \eqn{S} before a new attribute \eqn{X} is
-introduced, and \eqn{H(S|X)} is the entropy afterwards.
+introduced, and \eqn{H(S|X)} is the entropy of the system after the attribute
+\eqn{X} has been introduced.
+}
+\examples{
+\dontrun{infoGain(golf, "Wind", "Play")}
 }

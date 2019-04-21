@@ -1,13 +1,14 @@
 Package: integr
 Type: Package
 Title: An Implementation of Interaction Graphs of Aleks Jakulin
-Version: 0.0.0.9003
+Version: 1.0.0
 Authors@R: person("Petar", "Markovic", email = "peleplay@gmail.com",
                   role = c("aut", "cre"))
 Description: An Implementation of Interaction Graphs of Aleks Jakulin
-    (http://stat.columbia.edu/~jakulin/Int/). It generates a graphviz 
-    graph consisting of 3-way interactions (i.e. conditional Information Gain) 
-    based on a provided dataframe of discrete variables. 
+    (http://stat.columbia.edu/~jakulin/Int/). It generates a GraphViz graph of 
+    3-way interactions (i.e. conditional Information Gain) based on a provided 
+    discrete data.frame. Various output formats are supported (Graphviz, SVG, 
+    PNG, PSD, PS).
 Depends: 
     R (>= 3.5.1),
     dplyr (>= 0.7.6),

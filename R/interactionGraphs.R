@@ -1,4 +1,4 @@
-#Define Interaction graph nodes S3 class, constructor & generic methods ----
+#Interaction graph nodes S3 class, constructor & generic methods ----
 
 #' Constructs Interaction Graph Nodes (S3 class)
 #'
@@ -9,6 +9,11 @@
 igNode <- function(n, v){
 
   #Check validity of the input
+
+  if (missing(n) || missing(v)) { #a node.name or a node.value is missing
+    stop("Please provide igNode.name and/or igNode.value to the function")
+  }
+
   if (typeof(n) != "character") { #igNode name is not string
     stop("Interaction graph Node.name must be of type character")
   }
@@ -36,8 +41,14 @@ igNode <- function(n, v){
 #' @return Print \code{(igNode)} object
 
 print.igNode <- function(node) {
-  cat(paste0("\t", node$name, " ", "[label='", node$name, " \\n ",
-             node$value, "%'] ; \n"))
+
+  #Check input validity
+  if (missing(node)) { #a node is missing
+    stop("Please provide igNode to the function")
+  }
+
+  cat(paste0("\t ", node$name, " ", "[label='", node$name, " \\n ",
+             node$value, "%']; \n"))
 }
 
 #toString.igNode() generic method
@@ -48,23 +59,34 @@ print.igNode <- function(node) {
 #' @return \code{(character)} object made of the provided \code{(igNode)} object
 
 toString.igNode <- function(node) {
-  return(paste0("\t", node$name, " ", "[label='", node$name, " \\n ",
-         node$value, "%'] ; \n"))
+
+  if (missing(node)) { #a node is missing
+    stop("Please provide igNode to the function")
+  }
+
+  return(paste0("\t ", node$name, " ", "[label='", node$name, " \\n ",
+         node$value, "%']; \n"))
 }
 
 
-#Define Interaction graph edges s3 class, constructor & generic methods ----
+#Interaction graph edges s3 class, constructor & generic methods ----
 
 #' Constructs Interaction Graph Edges (S3 class)
 #'
 #' @param n1 igEdge.node1 \code{(character)}
 #' @param n2 igEdge.node2 \code{(character)}
-#' @param w igEdge.weight \code{(double)} (i.e. 3-way Interaction Gain)
+#' @param w igEdge.weight (i.e. 3-way Interaction Gain) \code{(double)}
 #' @return An instance of the \code{igEdge} class
 
 igEdge <- function(n1, n2, w) {
 
   #Check validity of the input
+
+  if (missing(n1) || missing(n2) || missing(w)) { #input parameters missing
+    stop("Please provide igEdge.node1 and/or igEdge.node2 and/or igEdge.weight
+         to the function")
+  }
+
   if (typeof(n1) != "character") { #igEdge.node1 name is not string
     stop("Interaction graph Edge.Node1 name must be of type character")
   }
@@ -96,16 +118,21 @@ igEdge <- function(n1, n2, w) {
 
 print.igEdge <- function(edge) {
 
+  #Check input validity
+  if (missing(edge)) { #ig.Edge is missing
+    stop("Please provide igEdge to the function")
+  }
+
   if (edge$weight < 0) { #print string for negative edges
-    cat(paste0("\t", edge$node1, " -> " , edge$node2,
+    cat(paste0("\t ", edge$node1, " -> " , edge$node2,
               " [labeldistance=2.5, labelangle=-45, label='", edge$weight,
-              "%', color='red', dir='none'] ; \n"))
+              "%', color='red', dir='none']; \n"))
   }
 
   else { #print string for positive edges
-    cat(paste0("\t", edge$node1, " -> " , edge$node2,
+    cat(paste0("\t ", edge$node1, " -> " , edge$node2,
               " [labeldistance=2.5, labelangle=-45, label='", edge$weight,
-              "%', color='green', dir='both'] ; \n"))
+              "%', color='green', dir='both']; \n"))
   }
 }
 
@@ -117,16 +144,22 @@ print.igEdge <- function(edge) {
 #' @return \code{(character)} object made of the provided \code{(igEdge)} object
 
 toString.igEdge <- function(edge) {
+
+  #Check input validity
+  if (missing(edge)) { #ig.Edge is missing
+    stop("Please provide igEdge to the function")
+  }
+
   if (edge$weight < 0) { #return string for negative edges
-    return(paste0("\t", edge$node1, " -> " , edge$node2,
+    return(paste0("\t ", edge$node1, " -> " , edge$node2,
                " [labeldistance=2.5, labelangle=-45, label='", edge$weight,
-               "%', color='red', dir='none'] ; \n"))
+               "%', color='red', dir='none']; \n"))
   }
 
   else { #return string for positive edges
-    return(paste0("\t", edge$node1, " -> " , edge$node2,
+    return(paste0("\t ", edge$node1, " -> " , edge$node2,
                " [labeldistance=2.5, labelangle=-45, label='", edge$weight,
-               "%', color='green', dir='both'] ; \n"))
+               "%', color='green', dir='both']; \n"))
   }
 }
 
@@ -134,31 +167,25 @@ toString.igEdge <- function(edge) {
 
 #' Constructs Interaction Graph (S3 class)
 #'
-#' @param n ig.nodes \code{(a list of igNode-s)}
-#' @param ne ig.negEdges \code{(a list of negative igEdge-s)}
-#' @param pe ig.posEdges \code{(a list of negative igEdge-s)}
+#' @param n ig.nodes (\code{a list of igNode objects})
+#' @param e ig.edges (\code{a list of igEdge objects})
 #' @return An instance of the \code{ig} class
 
-ig <- function(n, ne, pe){
+ig <- function(n, e){
 
-  # #Check validity of the input
-  # if (class(n) != "igNode") { #not an int. graph node
-  #   stop("Not an Interaction graph node!")
-  # }
-  #
-  # if (class(ne) != "igEdge" || class(pe) != "igEdge") { #not an int. graph edge
-  #   stop("Not an Interaction graph edge!")
-  # }
+  #Check input validity
+  if (missing(n) || missing(e)) { #list of nodes or edges is missing
+    stop("Please provide lists of igNodes and igEdges to the function")
+  }
 
   #Define class
-  val <- list(head = "digraph InteractionGraph { \n
-              graph [overlap = scale, fontsize = 10, fontname = 'helvetica']; \n
-              node [shape=box, margin=0.1, fontname = 'helvetica'] ; \n
-              edge [fontname = 'helvetica'] ; \n", #header
+  val <- list(head = paste0("digraph InteractionGraph { \n ",
+        "graph [overlap = scale, fontsize = 10, fontname = 'helvetica']; \n ",
+        "node [shape = box, margin = 0.1, fontname = 'helvetica']; \n ",
+        "edge [fontname = 'helvetica']; \n"), #header
               nodes = n,
-              negEdges = ne,
-              posEdges = pe,
-              foot = "\n } \n") #footer
+              edges = e,
+              foot = "} \n") #footer
 
   #Set class name
   attr(val, "class") <- "ig"
@@ -175,15 +202,18 @@ ig <- function(n, ne, pe){
 #' @return Print \code{(ig)} object
 
 print.ig <- function(intGraph){
+
+  #Check input validity
+  if (missing(intGraph)) { #ig is missing
+    stop("Please provide interaction graph to the function")
+  }
+
   cat(intGraph$head) #print header of the graph
-  for (n in 1:length(intGraph$nodes)) { #print all nodes
+  for (n in 1:length(intGraph$nodes)) { #print nodes
     print(intGraph$nodes[[n]])
   }
-  for (ne in 1:length(intGraph$negEdges)) { #print negative edges
-    print(intGraph$negEdges[[ne]])
-  }
-  for (pe in 1:length(intGraph$posEdges)) { #print positive edges
-    print(intGraph$posEdges[[pe]])
+  for (e in 1:length(intGraph$edges)) { #print edges
+    print(intGraph$edges[[e]])
   }
   cat(intGraph$foot)
 }
@@ -192,36 +222,34 @@ print.ig <- function(intGraph){
 
 #' toString() generic method for Interaction Graph (S3 class)
 #'
-#' @param intGraph An \code{(ig)} object
-#' @return \code{(character)} object made of the provided \code{(ig)} object
+#' @param intGraph An \code{ig} object
+#' @return A \code{character} object made of the provided \code{ig} object
 
 toString.ig <- function(intGraph) {
 
+  #Check input validity
+  if (missing(intGraph)) { #ig is missing
+    stop("Please provide interaction graph to the function")
+  }
+
   #init strings
   nodes <- ""
-  negEdges <- ""
-  posEdges <- ""
+  edges <- ""
 
   for (n in 1:length(intGraph$nodes)) { #convert to string all nodes
     nodes <- c(nodes, toString(intGraph$nodes[[n]]))
   }
   nodes <- paste(nodes, collapse = "") #paste all strings to a single string
 
-  for (ne in 1:length(intGraph$negEdges)) { #convert to string all neg. edges
-    negEdges <- c(negEdges, toString(intGraph$nedEdges[[ne]]))
+  for (e in 1:length(intGraph$edges)) { #convert to string all neg. edges
+    edges <- c(edges, toString(intGraph$edges[[e]]))
   }
-  negEdges <- paste(negEdges, collapse = "") #paste strings to a single string
-
-  for (pe in 1:length(intGraph$posEdges)) { #convert to string all pos. edges
-    posEdges <- c(posEdges, toString(intGraph$posEdges[[pe]]))
-  }
-  posEdges <- paste(posEdges, collapse = "") #paste strings to a single string
+  edges <- paste(edges, collapse = "") #paste strings to a single string
 
   #Final graph string
   return(paste0(intGraph$head,
                 nodes,
-                negEdges,
-                posEdges,
+                edges,
                 intGraph$foot))
 
 }
@@ -230,19 +258,37 @@ toString.ig <- function(intGraph) {
 
 #' Calculates 3-Way Interactions
 #'
-#' Formula: \eqn{}, where \eqn{} is
+#' Formula: \eqn{I(X;Y;C) = I(X,Y;C) - IG(X;C) - IG(Y;C)}, where \eqn{I(X;Y;C)}
+#' is 3-way Interaction gain of the attributes \eqn{X} and \eqn{Y}, given the
+#' context (i.e. class) attribute \eqn{C}. Hence, \eqn{I(X,Y;C)} is a joint
+#' 2-way interaction gain (i.e. Information Gain) of the attributes \eqn{X} and
+#' \eqn{Y}, and \eqn{I(X;C)} and \eqn{I(Y;C)} are 2-way Interaction gains
+#' (i.e. Information Gains) of the attributes \eqn{X} and \eqn{Y}, respectively.
 #'
-#' @param df A (discrete) data.frame
-#' @param classAtt A class column of the df (string)
-#' @param speedUp A (boolean) parameter, if TRUE, indicating whether pairs of
-#'   attributes with information gain equal to zero (on the 4th decimal) should
-#'   be pruned. This speeds up calculations for larger datasets. By default it
-#'   is turned off (i.e. set to FALSE).
-#' @return A list with: 1) data-frame with 3-way interactions, 2)list of 2-way
-#'   interactions of input attributes
+#' @param df A discrete \code{data.frame}
+#' @param classAtt A class column of the df (\code{string})
+#' @param speedUp A (\code{boolean}) parameter. If \code{TRUE}, indicates
+#'   whether the pairs of attributes with Information Gain equal to zero (on the
+#'   4th decimal) should be pruned. This speeds up calculations for larger
+#'   datasets. By default it is turned off (i.e. set to \code{FALSE}).
+#' @return A list with a: 1) data-frame with 3-way interactions, 2)list of 2-way
+#'   interactions of the input attributes
 #' @export
+#' @examples
+#' \dontrun{interactions3Way(golf, "Play")}
+#' \dontrun{interactions3Way(golf, "Play", speedUp = TRUE)}
+#' \dontrun{interactions3Way(golf, "Play", speedUp = FALSE)}
 
 interactions3Way <- function(df, classAtt, speedUp = FALSE){
+
+  #Check input validity
+  if (missing(df)) { #df is missing
+    stop("Please provide a data.frame to the function")
+  }
+
+  if (missing(classAtt)) { #class attribute is missing
+    stop("Please provide class attribute to the function")
+  }
 
   #check if df is discrete
   if (isDiscreteDataFrame(df)) { #df is discrete, proceed
@@ -332,22 +378,15 @@ interactions3Way <- function(df, classAtt, speedUp = FALSE){
 
 #' Creates Interaction graph
 #'
-#' Descirpiton...
-#'
-#' @param df A (discrete) data.frame
-#' @param classAtt A class column of the df (string)
-#' @param intNo A desired number of interactions (integer) to show. In range:
-#'   [2,20] in steps of 2; Default value is 16 (8 positive and 8 negative
-#'   interactions). If the provided value is odd, it will be rounded to the
-#'   closest largest value; if new valu is outside the range, it will be scaled
-#'   to fit (e.g. 1->2, 22->20).
-#' @param precomputed A (boolean) indication if the \code{df} is pointing to a
-#'   data.frame with precomputed interaction gains (generated by
-#'   \code{interactions3Way} function) or to the original dataset. By default a
-#'   data.frame containing the original data set is expected
-#'   (\code{precomputed=FALSE}.
-#' @return An interaction graph object
+#' @param df A \code{discrete} \code{data.frame}
+#' @param classAtt A class column of the df (\code{string})
+#' @param intNo A desired number of interactions to show, i.e. an
+#'   (\code{integer}) in range: [2,20]; Default value is 16.
+#' @return An interaction graph object (\code{string})
 #' @export
+#' @examples
+#' \dontrun{interactionGraph(golf, "Play")}
+#' \dontrun{interactionGraph(golf, "Play", intNo = 10, speedUp = TRUE)}
 
 interactionGraph <- function(df, classAtt, intNo = 16, speedUp = FALSE) {
 
@@ -369,12 +408,6 @@ interactionGraph <- function(df, classAtt, intNo = 16, speedUp = FALSE) {
               the range [2,20], and now it is 2")
   }
 
-  if (intNo %% 2 != 0) { #intNo is odd, round it to the first closest largest
-    intNo <- intNo + 1
-    warning(paste0("Parameter intNo was odd. It is converted to even number,
-                     and now is ", intNo))
-  }
-
   if (intNo > 20) { #intNo is larger than 20, make it maximal (i.e. 20)
     intNo <- 20
     warning("Parameter intNo was larger than the maximum. It is scaled to fit
@@ -389,51 +422,51 @@ interactionGraph <- function(df, classAtt, intNo = 16, speedUp = FALSE) {
   lst2WayIntGain <- tmp[[2]] #Unpack lst2WayIntGain
   rm(tmp) #clean-up
 
-  #Sort interactions df w.r.t. interaction gain for positive edges
-  i <- df[order(df$InteractionGain),] #order df ascending w.r.t. inter. gain.
-  i$InteractionGain <- as.double(as.character(i$InteractionGain)) #format col.
-  pi <- i[1:(intNo/2),] #select upper half of interactions (i.e. positives)
+  #Sort interactions df w.r.t. absolute interaction gain
+  df$InteractionGain <- as.double(as.character(df$InteractionGain))
+  df$intGainAbs <- abs(df$InteractionGain)
+  df <- df[order(-df$intGainAbs),] #order df descending w.r.t. abs inter. gain.
 
-  #Create negative edges
-  #Sort interactions df and get lower half (i.e. positive interactions)
-  i <- i[order(-i$InteractionGain),] #order df ascending w.r.t inter. gain.
-  ni <- i[1:(intNo/2),] #select lower half of interactions (i.e. negatives)
+  #Compute max possible number of interactions
+  #Get number of input attributes
+  noInAtts = length(unique(c(as.character(df[, 1]), as.character(df[, 2]))))
+  combNo = (noInAtts * (noInAtts-1))/2 #no. of possible interactions for the df
+  maxIntNo = min(combNo, intNo) #maximum number of interactions for the df
 
-  #Final df of interactions rbind(, n2min)
-  iTotal <- rbind(ni, pi)
+  #Check if requested number of interactions exceeds theoretical maximum, and if
+  #true, warn the user that the intNo has changed
+  if(intNo > maxIntNo) {
+    warning(paste0("The requested number of interactions exceeds maximum
+                   possible number of interactions for the given dataset.
+                   IntNo parameter has been reduced to ", maxIntNo, "."))
+  }
+
+  #Select top k-strongest interactions
+  iTotal <- df[1:maxIntNo,]
 
   #Create nodes
-  nodes <- unique(c(as.character(iTotal[, 1]), as.character(iTotal[, 2])))
   lstIgNodes <- list() #intiialize empty list of nodes
+  nodes <- unique(c(as.character(iTotal[, 1]), as.character(iTotal[, 2])))
   for (n in 1:length(nodes)) { #foreach node add corresp. igNode obj. to the lst
     lstIgNodes[[n]] <- igNode(nodes[n],
                             round(lst2WayIntGain[[nodes[n]]] * 100, 2))
   }
 
-  #Create negative edges
-  lstNegEdges <- list() #intiialize empty list of negative edges
-  for (ne in 1:nrow(ni)) { #foreach edge add corresp. igEdge obj. to the lst
-    lstNegEdges[[ne]] <- igEdge(as.character(ni[ne, 1]),
-                                as.character(ni[ne, 2]),
-                                round(ni[ne, 3] * 100, 2))
-  }
-
-  #Create positive edges
-  lstPosEdges <- list() #intiialize empty list of positive edges
-  for (pe in 1:nrow(pi)) { #foreach edge add corresp. igEdge obj. to the lst
-    lstPosEdges[[pe]] <- igEdge(as.character(pi[pe, 1]),
-                                as.character(pi[pe, 2]),
-                                round(pi[pe, 3] * 100, 2))
+  #Create edges
+  lstEdges <- list() #intiialize empty list of edges
+  for (e in 1:nrow(iTotal)) { #foreach edge add corresp. igEdge obj. to the lst
+    lstEdges[[e]] <- igEdge(as.character(iTotal[e, 1]),
+                                as.character(iTotal[e, 2]),
+                                round(iTotal[e, 3] * 100, 2))
   }
 
   #Create interaction graph object
-  interGraph <- ig(lstIgNodes, lstNegEdges, lstPosEdges)
+  interGraph <- ig(lstIgNodes, lstEdges)
 
-  #Convert interaction graph object to string, plot & return the graphviz object
+  #Convert interaction graph object to string & return it
   interGraph <- utils::capture.output(print(interGraph), file = NULL)
   interGraph <- paste(interGraph,collapse="\n")
 
-
-  return(interGraph) #return interaction graph as a graphviz object
+  return(interGraph)
 
 }

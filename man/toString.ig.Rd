@@ -7,10 +7,10 @@
 \method{toString}{ig}(intGraph)
 }
 \arguments{
-\item{intGraph}{An \code{(ig)} object}
+\item{intGraph}{An \code{ig} object}
 }
 \value{
-\code{(character)} object made of the provided \code{(ig)} object
+A \code{character} object made of the provided \code{ig} object
 }
 \description{
 toString() generic method for Interaction Graph (S3 class)

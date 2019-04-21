@@ -17,8 +17,12 @@ default}
 }
 \value{
 Writes the \code{ig} interaction graph to a GraphViz \code{.gv} file
-  to the specified folder in \code{path}
+  to the folder specified in the \code{path}
 }
 \description{
 Exports Interaction graph to a GraphViz file
+}
+\examples{
+\dontrun{igToGrViz(interactionGraph(golf, "Play", intNo = 10))}
+\dontrun{igToGrViz(interactionGraph(golf, "Play", intNo = 10), path="C:/myFolder", fName = "MyGraph")}
 }

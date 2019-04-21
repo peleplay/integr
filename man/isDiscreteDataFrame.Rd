@@ -7,13 +7,17 @@
 isDiscreteDataFrame(df)
 }
 \arguments{
-\item{df}{A data frame}
+\item{df}{A \code{data.frame}}
 }
 \value{
-Boolean: TRUE if all columns of the data frame \code{df}
-are factors, FALSE otherwise; If the provided \code{df} object is of other
-type than data.frame, the function throws an error.
+\code{Boolean}: \code{TRUE} if all columns of the \code{data.frame}
+  \code{df} are factors, \code{FALSE} otherwise; If the provided \code{df}
+  object is of other type than \code{data.frame}, the function throws an
+  error.
 }
 \description{
 Tests if data.frame is discrete (i.e. all of its columns are factors)
+}
+\examples{
+\dontrun{isDiscreteDataFrame(golf)}
 }

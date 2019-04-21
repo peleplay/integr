@@ -19,8 +19,18 @@ the working directory}
 }
 \value{
 Writes the \code{ig} interaction graph to a PDF (\code{.pdf}) file
-  to the specified folder in \code{path}
+  to the folder specified in the \code{path}
 }
 \description{
 Exports Interaction graph to a PDF file
+}
+\examples{
+\dontrun{
+g <- interactionGraph(golf, "Play", intNo = 10)
+igToPDF(g)
+}
+\dontrun{
+g <- interactionGraph(golf, "Play", intNo = 10)
+igToPDF(g, path = "C:/myFolder", fName = "MyGraph", h = 2000)
+}
 }

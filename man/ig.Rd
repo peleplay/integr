@@ -4,14 +4,12 @@
 \alias{ig}
 \title{Constructs Interaction Graph (S3 class)}
 \usage{
-ig(n, ne, pe)
+ig(n, e)
 }
 \arguments{
-\item{n}{ig.nodes \code{(a list of igNode-s)}}
+\item{n}{ig.nodes (\code{a list of igNode objects})}
 
-\item{ne}{ig.negEdges \code{(a list of negative igEdge-s)}}
-
-\item{pe}{ig.posEdges \code{(a list of negative igEdge-s)}}
+\item{e}{ig.edges (\code{a list of igEdge objects})}
 }
 \value{
 An instance of the \code{ig} class

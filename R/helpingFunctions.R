@@ -3,10 +3,12 @@
 #' Formula: \eqn{H(S) = -P_i * \sum log_2 * P_i}, where \eqn{P_i} is the
 #' probability of the corresponding \eqn{i}-th class
 #'
-#' @param df A (discrete) data.frame
-#' @param classAtt A class column of the df (string)
-#' @return The Shannon's entropy of \code{df}, based on the \code{classAtt}
+#' @param df A discrete \code{data.frame}
+#' @param classAtt A class column of the df (\code{string})
+#' @return The Shannon's entropy of the \code{df}, based on the \code{classAtt}
 #'   attribute
+#' @examples
+#' \dontrun{entropy(golf, "Play")}
 
 entropy <- function(df, classAtt) {
   freq <- table(df[classAtt]) #vector of class frequencies
@@ -16,17 +18,20 @@ entropy <- function(df, classAtt) {
   return(entr)
 }
 
-#' Calculates Information Gain (2-way Interaction Gain) of a discrete dataframe
+#' Calculates Information Gain (2-way Interaction Gain) of a discrete data.frame
 #'
 #' \eqn{InfoGAIN = H(S) - H(S|X)}, where \eqn{H(S)} is the difference in the
 #' Shannon's entropy of the system \eqn{S} before a new attribute \eqn{X} is
-#' introduced, and \eqn{H(S|X)} is the entropy afterwards.
+#' introduced, and \eqn{H(S|X)} is the entropy of the system after the attribute
+#' \eqn{X} has been introduced.
 #'
-#' @param df A discrete dataframe
-#' @param inAtt An input column of the dataframe (string)
-#' @param classAtt A class column of the dataframe (string)
+#' @param df A discrete \code{data.frame}
+#' @param inAtt An input column of the data.frame \code{df} (\code{string})
+#' @param classAtt A class column of the data.frame \code{df} (\code{string})
 #' @return The Information Gain of \code{df} on the class attribute
 #'   \code{classAtt}
+#' @examples
+#' \dontrun{infoGain(golf, "Wind", "Play")}
 
 infoGain <- function(df, inAtt, classAtt) {
   apr <- entropy(df, classAtt) #a-priori entropy of the df
@@ -62,10 +67,13 @@ infoGain <- function(df, inAtt, classAtt) {
 
 #' Tests if data.frame is discrete (i.e. all of its columns are factors)
 #'
-#' @param df A data frame
-#' @return Boolean: TRUE if all columns of the data frame \code{df}
-#' are factors, FALSE otherwise; If the provided \code{df} object is of other
-#' type than data.frame, the function throws an error.
+#' @param df A \code{data.frame}
+#' @return \code{Boolean}: \code{TRUE} if all columns of the \code{data.frame}
+#'   \code{df} are factors, \code{FALSE} otherwise; If the provided \code{df}
+#'   object is of other type than \code{data.frame}, the function throws an
+#'   error.
+#' @examples
+#' \dontrun{isDiscreteDataFrame(golf)}
 
 isDiscreteDataFrame <- function(df) {
 

@@ -7,19 +7,29 @@
 interactions3Way(df, classAtt, speedUp = FALSE)
 }
 \arguments{
-\item{df}{A (discrete) data.frame}
+\item{df}{A discrete \code{data.frame}}
 
-\item{classAtt}{A class column of the df (string)}
+\item{classAtt}{A class column of the df (\code{string})}
 
-\item{speedUp}{A (boolean) parameter, if TRUE, indicating whether pairs of
-attributes with information gain equal to zero (on the 4th decimal) should
-be pruned. This speeds up calculations for larger datasets. By default it
-is turned off (i.e. set to FALSE).}
+\item{speedUp}{A (\code{boolean}) parameter. If \code{TRUE}, indicates
+whether the pairs of attributes with Information Gain equal to zero (on the
+4th decimal) should be pruned. This speeds up calculations for larger
+datasets. By default it is turned off (i.e. set to \code{FALSE}).}
 }
 \value{
-A list with: 1) data-frame with 3-way interactions, 2)list of 2-way
-  interactions of input attributes
+A list with a: 1) data-frame with 3-way interactions, 2)list of 2-way
+  interactions of the input attributes
 }
 \description{
-Formula: \eqn{}, where \eqn{} is
+Formula: \eqn{I(X;Y;C) = I(X,Y;C) - IG(X;C) - IG(Y;C)}, where \eqn{I(X;Y;C)}
+is 3-way Interaction gain of the attributes \eqn{X} and \eqn{Y}, given the
+context (i.e. class) attribute \eqn{C}. Hence, \eqn{I(X,Y;C)} is a joint
+2-way interaction gain (i.e. Information Gain) of the attributes \eqn{X} and
+\eqn{Y}, and \eqn{I(X;C)} and \eqn{I(Y;C)} are 2-way Interaction gains
+(i.e. Information Gains) of the attributes \eqn{X} and \eqn{Y}, respectively.
+}
+\examples{
+\dontrun{interactions3Way(golf, "Play")}
+\dontrun{interactions3Way(golf, "Play", speedUp = TRUE)}
+\dontrun{interactions3Way(golf, "Play", speedUp = FALSE)}
 }

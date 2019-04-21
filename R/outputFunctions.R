@@ -1,10 +1,21 @@
 #Plot graphviz ----
+
 #' Plots Interaction graph
 #'
 #' @param ig Interaction graph
 #' @return Plots the \code{ig}
 #' @export
+#' @examples
+#' \dontrun{plotIntGraph(interactionGraph(golf, "Play", intNo = 10))}
+
 plotIntGraph <- function(ig) {
+
+  #Check input validity
+
+  if (missing(ig)) { #interaction graph is missing
+    stop("Please provide an interaction graph object to the function")
+  }
+
   DiagrammeR::grViz(ig)
 }
 
@@ -18,18 +29,21 @@ plotIntGraph <- function(ig) {
 #' @param fName The name of the file to be created; "InteractionGraph" by
 #'   default
 #' @return Writes the \code{ig} interaction graph to a GraphViz \code{.gv} file
-#'   to the specified folder in \code{path}
+#'   to the folder specified in the \code{path}
 #' @export
+#' @examples
+#' \dontrun{igToGrViz(interactionGraph(golf, "Play", intNo = 10))}
+#' \dontrun{igToGrViz(interactionGraph(golf, "Play", intNo = 10), path="C:/myFolder", fName = "MyGraph")}
 
 igToGrViz <- function(ig, path = getwd(), fName = "InteractionGraph") {
 
   #Check input validity
-  if (typeof(ig) != "character" || grepl("InteractionGraph", ig) != TRUE) {
-    #the ig parameter does not point to InteractionGraph definition string
-    stop("Please provide Interaction graphs definition as the 'ig' parameter")
+
+  if (missing(ig)) { #Interaction graph is missing
+    stop("Please provide an interaction graph object to the function")
   }
 
-  if (typeof(ig) != "character") {
+  if (typeof(ig) != "character" || grepl("InteractionGraph", ig) != TRUE) {
     #the ig parameter does not point to InteractionGraph definition string
     stop("Please provide Interaction graphs definition as the 'ig' parameter")
   }
@@ -47,7 +61,8 @@ igToGrViz <- function(ig, path = getwd(), fName = "InteractionGraph") {
   }
 
   #Write ig to .gv binary
-  if(path == getwd()){ #Add trailing backslash if current wd is used
+  #Add trailing backslash if current path does not contains it
+  if (substr(path, nchar(path), nchar(path)) != "/") {
     path <- paste0(path, "/")
   }
 
@@ -69,8 +84,17 @@ igToGrViz <- function(ig, path = getwd(), fName = "InteractionGraph") {
 #'   default
 #' @param h Desired height of the image in pixels; 2000px by default
 #' @return Writes the \code{ig} interaction graph to a SVG (\code{.svg}) file
-#'   to the specified folder in \code{path}
+#'   to the folder specified in the \code{path}
 #' @export
+#' @examples
+#' \dontrun{
+#' g <- interactionGraph(golf, "Play", intNo = 10)
+#' igToSVG(g)
+#' }
+#' \dontrun{
+#' g <- interactionGraph(golf, "Play", intNo = 10)
+#' igToSVG(g, path = "C:/myFolder", fName = "MyGraph", h = 2000)
+#' }
 
 igToSVG <- function(ig,
                     path = getwd(),
@@ -78,12 +102,12 @@ igToSVG <- function(ig,
                     h = 2000) {
 
   #Check input validity
-  if (typeof(ig) != "character" || grepl("InteractionGraph", ig) != TRUE) {
-    #the ig parameter does not point to InteractionGraph definition string
-    stop("Please provide Interaction graphs definition as the 'ig' parameter")
+
+  if (missing(ig)) { #Interaction graph is missing
+    stop("Please provide an interaction graph object to the function")
   }
 
-  if (typeof(ig) != "character") {
+  if (typeof(ig) != "character" || grepl("InteractionGraph", ig) != TRUE) {
     #the ig parameter does not point to InteractionGraph definition string
     stop("Please provide Interaction graphs definition as the 'ig' parameter")
   }
@@ -105,10 +129,15 @@ igToSVG <- function(ig,
     stop("The 'height' parameter needs to be integer")
   }
 
-
   #Export ig to svg
+
+  #Add trailing backslash if current path does not contains it
+  if (substr(path, nchar(path), nchar(path)) != "/") {
+    path <- paste0(path, "/")
+  }
+
   DiagrammeRsvg::export_svg(grViz(ig)) %>%
-    charToRaw %>% rsvg::rsvg_svg(file=paste0(path, "/", fName, ".svg"),
+    charToRaw %>% rsvg::rsvg_svg(file=paste0(path, fName, ".svg"),
                                  height = h)
 }
 
@@ -123,8 +152,17 @@ igToSVG <- function(ig,
 #'   default
 #' @param h Desired height of the image in pixels; 2000px by default
 #' @return Writes the \code{ig} interaction graph to a PNG (\code{.png}) file
-#'   to the specified folder in \code{path}
+#'   to the folder specified in the \code{path}
 #' @export
+#' @examples
+#' \dontrun{
+#' g <- interactionGraph(golf, "Play", intNo = 10)
+#' igToPNG(g)
+#' }
+#' \dontrun{
+#' g <- interactionGraph(golf, "Play", intNo = 10)
+#' igToPNG(g, path = "C:/myFolder", fName = "MyGraph", h = 2000)
+#' }
 
 igToPNG <- function(ig,
                     fName = "InteractionGraph",
@@ -132,12 +170,12 @@ igToPNG <- function(ig,
                     h = 2000) {
 
   #Check input validity
-  if (typeof(ig) != "character" || grepl("InteractionGraph", ig) != TRUE) {
-    #the ig parameter does not point to InteractionGraph definition string
-    stop("Please provide Interaction graphs definition as the 'ig' parameter")
+
+  if (missing(ig)) { #Interaction graph is missing
+    stop("Please provide an interaction graph object to the function")
   }
 
-  if (typeof(ig) != "character") {
+  if (typeof(ig) != "character" || grepl("InteractionGraph", ig) != TRUE) {
     #the ig parameter does not point to InteractionGraph definition string
     stop("Please provide Interaction graphs definition as the 'ig' parameter")
   }
@@ -161,8 +199,14 @@ igToPNG <- function(ig,
 
 
   #Export ig to png
+
+  #Add trailing backslash if current path does not contains it
+  if (substr(path, nchar(path), nchar(path)) != "/") {
+    path <- paste0(path, "/")
+  }
+
   DiagrammeRsvg::export_svg(grViz(ig)) %>%
-    charToRaw %>% rsvg::rsvg_png(file=paste0(path, "/", fName, ".png"),
+    charToRaw %>% rsvg::rsvg_png(file=paste0(path, fName, ".png"),
                                  height = h)
 
 }
@@ -178,8 +222,17 @@ igToPNG <- function(ig,
 #'   default
 #' @param h Desired height of the image in pixels; 2000px by default
 #' @return Writes the \code{ig} interaction graph to a PDF (\code{.pdf}) file
-#'   to the specified folder in \code{path}
+#'   to the folder specified in the \code{path}
 #' @export
+#' @examples
+#' \dontrun{
+#' g <- interactionGraph(golf, "Play", intNo = 10)
+#' igToPDF(g)
+#' }
+#' \dontrun{
+#' g <- interactionGraph(golf, "Play", intNo = 10)
+#' igToPDF(g, path = "C:/myFolder", fName = "MyGraph", h = 2000)
+#' }
 
 igToPDF <- function(ig,
                     fName = "InteractionGraph",
@@ -187,6 +240,11 @@ igToPDF <- function(ig,
                     h = 2000) {
 
   #Check validity of input
+
+  if (missing(ig)) { #Interaction graph is missing
+    stop("Please provide an interaction graph object to the function")
+  }
+
   if (typeof(ig) != "character" || grepl("InteractionGraph", ig) != TRUE) {
     #the ig parameter does not point to InteractionGraph definition string
     stop("Please provide Interaction graphs definition as the 'ig' parameter")
@@ -210,8 +268,14 @@ igToPDF <- function(ig,
   }
 
   #Export ig to pdf
+
+  #Add trailing backslash if current path does not contains it
+  if (substr(path, nchar(path), nchar(path)) != "/") {
+    path <- paste0(path, "/")
+  }
+
   DiagrammeRsvg::export_svg(grViz(ig)) %>%
-    charToRaw %>% rsvg::rsvg_pdf(file=paste0(path, "/", fName, ".pdf"),
+    charToRaw %>% rsvg::rsvg_pdf(file=paste0(path, fName, ".pdf"),
                                  height = h)
 
 }
@@ -227,8 +291,17 @@ igToPDF <- function(ig,
 #'   default
 #' @param h Desired height of the image in pixels; 2000px by default
 #' @return Writes the \code{ig} interaction graph to a PDF (\code{.ps}) file
-#'   to the specified folder in \code{path}
+#'   to the folder specified in the \code{path}
 #' @export
+#' @examples
+#' \dontrun{
+#' g <- interactionGraph(golf, "Play", intNo = 10)
+#' igToPS(g)
+#' }
+#' \dontrun{
+#' g <- interactionGraph(golf, "Play", intNo = 10)
+#' igToPS(g, path = "C:/myFolder", fName = "MyGraph", h = 2000)
+#' }
 
 igToPS <- function(ig,
                     fName = "InteractionGraph",
@@ -236,6 +309,11 @@ igToPS <- function(ig,
                     h = 2000) {
 
   #Check validity of input
+
+  if (missing(ig)) { #Interaction graph is missing
+    stop("Please provide an interaction graph object to the function")
+  }
+
   if (typeof(ig) != "character" || grepl("InteractionGraph", ig) != TRUE) {
     #the ig parameter does not point to InteractionGraph definition string
     stop("Please provide Interaction graphs definition as the 'ig' parameter")
@@ -259,8 +337,14 @@ igToPS <- function(ig,
   }
 
   #Export ig to ps
+
+  #Add trailing backslash if current path does not contains it
+  if (substr(path, nchar(path), nchar(path)) != "/") {
+    path <- paste0(path, "/")
+  }
+
   DiagrammeRsvg::export_svg(grViz(ig)) %>%
-    charToRaw %>% rsvg::rsvg_ps(file=paste0(path, "/", fName, ".ps"),
+    charToRaw %>% rsvg::rsvg_ps(file=paste0(path, fName, ".ps"),
                                  height = h)
 
 }
