@@ -22,3 +22,7 @@ LazyData: true
 URL: https://github.com/peleplay/integr
 BugReports: https://github.com/peleplay/integr/issues
 RoxygenNote: 6.1.1
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

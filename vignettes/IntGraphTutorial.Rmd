@@ -1,0 +1,155 @@
+---
+title: "A Step-by-step Tutorial for Interaction Graphs Package 'integr'"
+author: "Petar Markovic"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{A Tutorial for Interaction Graphs Package integr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+#Introduction
+This vignette provides a step-by-step tutorial for using the Interaction graphs package "integr". The package is an implementation of Aleks Jakulin's Interaction Analysis methodology (http://stat.columbia.edu/~jakulin/Int/) inspired by implementation in Orange 2 data mining software (https://orange.biolab.si/).
+
+#The Concept^[See http://stat.columbia.edu/~jakulin/Int/ for more details on the methodlogy]
+In the context of supervised machine learning, an interaction (i.e statistically relevant dependence) between two attributes $X$ and $Y$, in the presence of the context (i.e. class) atribute $C$, is called **3-way interaction**. A strength of such interaction is measured with **3-way Interaction gain**: $I(X;Y;C) = I(X,Y;C) − I(X;C) − I(Y;C)$. Here, $I(X,Y;C) = I(X,Y|C) = H(X|C) + H(Y|C) − H(X,Y|C)$ is conditional Information gain (i.e. conditional Mutual information) between $X$ and $Y$ in the context $C$, and $I(X;Y) = H(X) + H(Y) − H(X,Y)$ is measure of dependence (i.e. "correlation") between $X$ and $Y$ regardless of context, where $H(X) = P_i \sum_{i}log_{2}P_i$ is Shannon's entropy measured in bits, and $P_i$ the probability of the $i-th$ class; **2-way Interaction gains** of the single attributes $X$ and $Y$ is represented with $I(X;C) = InfoGain_{c}(X) = \sum_{x}\sum_{c}P(x,c)log\frac{P(x,c)}{P(x)P(c)}$ and $I(Y;C) = InfoGain_{c}(Y) = \sum_{y}\sum_{c}P(y,c)log\frac{P(y,c)}{P(y)P(c)}$, respectively.
+
+
+**Interaction graphs** (Figure 1) are a graphical representation of the $k$-most significant 3-way interactions ($2 \leq k \leq 20$). The graph consists of nodes which represent interracting attributes (and their 2-way interactions indicated below the name), and weighted edges which represent the strenght of 3-way interaction. There are two types of edges: 
+
+* The positively interacting (i.e. green) edges indicate that the observed pair of attributes provides more information for making a decision if observed together, rather than observed alone. E.g. (Figure 1): _Outlook_ alone explains 24.69% of the entropy, _Windy_ alone explains 4.79% of the entropy, whilst combined, they additionally explain 30.59% of the entropy. Thus, if observed together, they explain 24.69% + 4.79% + 30.59% = 60.07% of the entropy of the dataset.
+* The negatively interacting (i.e. red) edges indicate that the the observed pair of attributes repeat the same information and should not be combined. E.g. (Figure 1): _Outlook_ alone explains 24.69% of the entropy, _Others_ alone explains 94.02% of the entropy, whilst combined, they repeat 24.69% of the previous information (i.e. this is why the edge _Outlook_ - _Others_ is negative: -24.69%). Thus, if observed together, they explain 24.69% + 94.02% - 24.69% = 94.02% of the entropy of the dataset.
+
+```{r, fig.show='hold', echo=FALSE, warning=FALSE, message=FALSE, error=FALSE, fig.cap="Figure 1: Interaction graph based on the toy-dataset 'Golf'", fig.height=4, fig.align='center'}
+library(integr)
+integr::plotIntGraph(integr::interactionGraph(integr::golf, classAtt = "Play", intNo = 10))
+```
+
+Hence, interaction graphs can be used as a tool for understadning the most important interactions and selection of the attributes suitable for grouping/including in a machine learning model.
+
+#The toy-data description
+In this tutorial, the **'Golf'** toy-dataset will be used. It is included in the package, and its structure is presented in the Table below. It represents a 14-row discrete data.frame (i.e. all columns are factors) with 6 discrete attributes of which 5 are input, and 1 is the class attribute. The input attributes are used to determine whether a game of golf was played given the conditions, and the decision is recorded in the class attribute:
+
+* __Outlook:__ values: Overcast, Rainy, Sunny (_input attribute_)
+* __Temperature:__ values: Cool, Hot, Mild (_input attribute_)
+* __Humidity:__ values: High, Normal (_input attribute_)
+* __Windy:__ values: True, False (_input attribute_)
+* __Others:__ artificially added attribute indicating whether the players on the other courts were playing the golf at the given time, values: Yes, No (_input attribute_)
+* __Play:__ indicating whether the decision was to play or not to play a party of golf, values: Yes, No (_class attribute_)
+
+```{r, echo=FALSE, results='asis', fig.cap="Table 1: The 'Golf' toy-dataset"}
+knitr::kable(integr::golf)
+```
+
+#Step-by-step tutorial
+
+##Reading the data
+First the 'integr' package, and a dataset needs to be loaded. The dataset needs to be discrete, and to have a class attribute. Here the 'Golf' toy-dataset will be used:
+```{r, eval=FALSE}
+#load integr package (needs to be installed first!)
+library("integr")
+
+#read Golf toy-dataset
+Golf <- data("golf")
+```
+
+##Generating the interaction graph object
+When the data is loaded, an interaction graph object needs to be created. A data.frame containing the data needs to be provided, as well as the name of the class attribute as a string:
+```{r, eval=FALSE}
+#create an Interaction graph object
+g <- interactionGraph(Golf, classAtt = "Play", intNo = 10, speedUp = FALSE)
+```
+
+The additional parameters _intNo_ (_integer_) and _speedUp_ (_boolean_) are optional. The first indicates the desired number of interactions to be displayed on the interaction graph (2 <= _intNo_ <= 20, default 16), whilst the latter indicates if during the interactions computation all attributes that have 2-way interaction gain equal to zero (on the 4th decimal) should be pruned; this speeds up computation for larger datasets but it can lead to less precise results so it is turned off (i.e. set to FALSE) by default.
+
+In case the __intNo__ parameter is set to an inappropriate value (i.e <2, >20 or larger than theoretically possible number of interactions for the given dataset) it is automatically adjusted to fit and a warning message is printed.
+
+##Plotting the interaction graph object
+After the interaction graph object has been obtained, it can be plotted using _plotIntGraph()_:
+```{r, eval=FALSE}
+#plot an Interaction graph object
+plotIntGraph(g)
+```
+
+It only requiers an interaction graph object as an input. Here the result of the previous step is used.
+
+The result of this comand is Figure 1.
+
+##Exporting the interaction graph object
+Integr package allows interaction graphs to be export to a binary file. The supported formats are: a Graphviz graph, SVG image, PNG image, PostScript (PS) file, or PDF. The code for exporting the corresponding binary file is provided below.
+
+###Export to a Graphviz binary file
+```{r, eval=FALSE}
+#export an Interaction graph object to a Graphviz file
+igToGrViz(g, path = "myFolder", fName = "myInteractionGraph")
+```
+
+_g_ is the interaction graph object; 
+
+_path_ parameter is a string indicating the path (folder) in which the output should be saved. If not specified differently, working directory by default;
+
+_fName_ parameter is a string indicating the name of the output. It should be defined without extension and without spaces. If not specified differently, 'InteractionGraph' by default.
+
+###Export to  a SVG image
+```{r, eval=FALSE}
+#export an Interaction graph object to a SVG image
+igToSVG(g, path = "myFolder", fName = "myInteractionGraph", h = 2000)
+```
+
+_g_ is the interaction graph object; 
+
+_path_ parameter is a string indicating the path (folder) in which the output should be saved. If not specified differently, working directory by default;
+
+_fName_ parameter is a string indicating the name of the output. It should be defined without extension and without spaces. If not specified differently, 'InteractionGraph' by default;
+
+_h_ is the desired height of the output image in pixels. If not defined differenlty, 2000 by default.
+
+###Export to a PNG image
+```{r, eval=FALSE}
+#export an Interaction graph object to a PNG image
+igToPNG(g, path = "myFolder", fName = "myInteractionGraph", h = 2000)
+```
+
+_g_ is the interaction graph object; 
+
+_path_ parameter is a string indicating the path (folder) in which the output should be saved. If not specified differently, working directory by default;
+
+_fName_ parameter is a string indicating the name of the output. It should be defined without extension and without spaces. If not specified differently, 'InteractionGraph' by default;
+
+_h_ is the desired height of the output image in pixels. If not defined differenlty, 2000 by default.
+
+###Export to a PDF image
+```{r, eval=FALSE}
+#export an Interaction graph object to a PDF image
+igToPDF(g, path = "myFolder", fName = "myInteractionGraph", h = 2000)
+```
+
+_g_ is the interaction graph object; 
+
+_path_ parameter is a string indicating the path (folder) in which the output should be saved. If not specified differently, working directory by default;
+
+_fName_ parameter is a string indicating the name of the output. It should be defined without extension and without spaces. If not specified differently, 'InteractionGraph' by default;
+
+_h_ is the desired height of the output image in pixels. If not defined differenlty, 2000 by default.
+
+###Export to a PS image
+```{r, eval=FALSE}
+#export an Interaction graph object to a PS image
+igToPDF(g, path = "myFolder", fName = "myInteractionGraph", h = 2000)
+```
+
+_g_ is the interaction graph object; 
+
+_path_ parameter is a string indicating the path (folder) in which the output should be saved. If not specified differently, working directory by default;
+
+_fName_ parameter is a string indicating the name of the output. It should be defined without extension and without spaces. If not specified differently, 'InteractionGraph' by default;
+
+_h_ is the desired height of the output image in pixels. If not defined differenlty, 2000 by default.
