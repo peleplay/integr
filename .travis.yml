@@ -1,5 +1,10 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
+before_install:
+sudo apt-get install libv8-3.14-dev
+
 language: R
-sudo: false
+#sudo: false
 cache: packages
+
+
