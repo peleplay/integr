@@ -138,7 +138,7 @@ igToSVG <- function(ig,
 
   DiagrammeRsvg::export_svg(grViz(ig)) %>%
     charToRaw %>% rsvg::rsvg_svg(file=paste0(path, fName, ".svg"),
-                                 height = h)
+                                 height = as.integer(h))
 }
 
 #Export image (png) ----
@@ -207,7 +207,7 @@ igToPNG <- function(ig,
 
   DiagrammeRsvg::export_svg(grViz(ig)) %>%
     charToRaw %>% rsvg::rsvg_png(file=paste0(path, fName, ".png"),
-                                 height = h)
+                                 height = as.integer(h))
 
 }
 
@@ -276,7 +276,7 @@ igToPDF <- function(ig,
 
   DiagrammeRsvg::export_svg(grViz(ig)) %>%
     charToRaw %>% rsvg::rsvg_pdf(file=paste0(path, fName, ".pdf"),
-                                 height = h)
+                                 height = as.integer(h))
 
 }
 
@@ -345,6 +345,6 @@ igToPS <- function(ig,
 
   DiagrammeRsvg::export_svg(grViz(ig)) %>%
     charToRaw %>% rsvg::rsvg_ps(file=paste0(path, fName, ".ps"),
-                                 height = h)
+                                 height = as.integer(h))
 
 }
