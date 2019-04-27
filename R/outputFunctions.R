@@ -16,6 +16,11 @@ plotIntGraph <- function(ig) {
     stop("Please provide an interaction graph object to the function")
   }
 
+  if (typeof(ig) != "character" || grepl("InteractionGraph", ig) != TRUE) {
+    #the ig parameter does not point to InteractionGraph definition string
+    stop("Please provide Interaction graphs definition as the 'ig' parameter")
+  }
+
   DiagrammeR::grViz(ig)
 }
 
