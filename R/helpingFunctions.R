@@ -11,6 +11,12 @@
 #' \dontrun{entropy(golf, "Play")}
 
 entropy <- function(df, classAtt) {
+
+  #Check if classAtt is a string
+  if(typeof(classAtt) != "character"){
+    stop("classAtt parameter needs to be string")
+  }
+
   freq <- table(df[classAtt]) #vector of class frequencies
   prob <- round(freq / sum(freq), 3) #vector of class probabilities
   logs <- log2(prob) * (-1) #vector of logarithms of class probabilities
