@@ -13,6 +13,11 @@ interactionGraph(df, classAtt, intNo = 16, speedUp = FALSE)
 
 \item{intNo}{A desired number of interactions to show, i.e. an
 (\code{integer}) in range: [2,20]; Default value is 16.}
+
+\item{speedUp}{A (\code{boolean}) parameter. If \code{TRUE}, indicates
+whether the pairs of attributes with Information Gain equal to zero (on the
+4th decimal) should be pruned. This speeds up calculations for larger
+datasets. By default it is turned off (i.e. set to \code{FALSE}).}
 }
 \value{
 An interaction graph object (\code{string})

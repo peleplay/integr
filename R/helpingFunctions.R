@@ -9,6 +9,8 @@
 #'   attribute
 #' @examples
 #' \dontrun{entropy(golf, "Play")}
+#' @export
+#' @import dplyr
 
 entropy <- function(df, classAtt) {
 
@@ -38,6 +40,8 @@ entropy <- function(df, classAtt) {
 #'   \code{classAtt}
 #' @examples
 #' \dontrun{infoGain(golf, "Wind", "Play")}
+#' @export
+#' @import dplyr
 
 infoGain <- function(df, inAtt, classAtt) {
   apr <- entropy(df, classAtt) #a-priori entropy of the df
@@ -58,10 +62,11 @@ infoGain <- function(df, inAtt, classAtt) {
   freqC$logs <- freqC$probs * log2(freqC$probs) * (-1) #Calculate logarithms
 
   #Upper level entropy components
+  logs <- NULL #supress R CMD Check note on "undefined global variable 'logs'"
   freqB$entrs <- freqC %>%
                  dplyr::group_by(!!as.symbol(inAtt)) %>%
                  dplyr::summarise(entrs = sum(logs))
-  freqB$weight <- round(freqB$classCount / sum(freqB$classCount),3)
+  freqB$weight <- round(freqB$classCount / sum(freqB$classCount), 3)
 
   #Overall entropy
   entr <- sum(freqB$weight * freqB$entrs$entrs)

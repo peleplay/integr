@@ -7,6 +7,7 @@
 #' @export
 #' @examples
 #' \dontrun{plotIntGraph(interactionGraph(golf, "Play", intNo = 10))}
+#' @import DiagrammeR DiagrammeRsvg rsvg
 
 plotIntGraph <- function(ig) {
 
@@ -38,7 +39,7 @@ plotIntGraph <- function(ig) {
 #' @export
 #' @examples
 #' \dontrun{igToGrViz(interactionGraph(golf, "Play", intNo = 10))}
-#' \dontrun{igToGrViz(interactionGraph(golf, "Play", intNo = 10), path="C:/myFolder", fName = "MyGraph")}
+#' \dontrun{igToGrViz(interactionGraph(golf, "Play", path= "myFolder", fName = "MyGraph")}
 
 igToGrViz <- function(ig, path = getwd(), fName = "InteractionGraph") {
 
@@ -100,6 +101,7 @@ igToGrViz <- function(ig, path = getwd(), fName = "InteractionGraph") {
 #' g <- interactionGraph(golf, "Play", intNo = 10)
 #' igToSVG(g, path = "C:/myFolder", fName = "MyGraph", h = 2000)
 #' }
+#' @import DiagrammeR DiagrammeRsvg rsvg
 
 igToSVG <- function(ig,
                     path = getwd(),
@@ -168,6 +170,7 @@ igToSVG <- function(ig,
 #' g <- interactionGraph(golf, "Play", intNo = 10)
 #' igToPNG(g, path = "C:/myFolder", fName = "MyGraph", h = 2000)
 #' }
+#' @import DiagrammeR DiagrammeRsvg rsvg
 
 igToPNG <- function(ig,
                     fName = "InteractionGraph",
@@ -238,6 +241,7 @@ igToPNG <- function(ig,
 #' g <- interactionGraph(golf, "Play", intNo = 10)
 #' igToPDF(g, path = "C:/myFolder", fName = "MyGraph", h = 2000)
 #' }
+#' @import DiagrammeR DiagrammeRsvg rsvg
 
 igToPDF <- function(ig,
                     fName = "InteractionGraph",
@@ -307,6 +311,7 @@ igToPDF <- function(ig,
 #' g <- interactionGraph(golf, "Play", intNo = 10)
 #' igToPS(g, path = "C:/myFolder", fName = "MyGraph", h = 2000)
 #' }
+#' @import DiagrammeR DiagrammeRsvg rsvg
 
 igToPS <- function(ig,
                     fName = "InteractionGraph",

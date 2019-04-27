@@ -278,6 +278,7 @@ toString.ig <- function(intGraph) {
 #' \dontrun{interactions3Way(golf, "Play")}
 #' \dontrun{interactions3Way(golf, "Play", speedUp = TRUE)}
 #' \dontrun{interactions3Way(golf, "Play", speedUp = FALSE)}
+#' @import dplyr gtools utils
 
 interactions3Way <- function(df, classAtt, speedUp = FALSE){
 
@@ -328,7 +329,7 @@ interactions3Way <- function(df, classAtt, speedUp = FALSE){
     #Calculate 3-way interaction gains ----
 
     #define att pairs
-    lst3WayIntGain <- combn(names(lst2WayIntGain), 2, simplify = FALSE)
+    lst3WayIntGain <- utils::combn(names(lst2WayIntGain), 2, simplify = FALSE)
 
     for (row in 1:length(lst3WayIntGain)) { #For each "row" of the list
       e1 <- lst3WayIntGain[[row]][1] #create current element 1
@@ -382,11 +383,16 @@ interactions3Way <- function(df, classAtt, speedUp = FALSE){
 #' @param classAtt A class column of the df (\code{string})
 #' @param intNo A desired number of interactions to show, i.e. an
 #'   (\code{integer}) in range: [2,20]; Default value is 16.
+#' @param speedUp A (\code{boolean}) parameter. If \code{TRUE}, indicates
+#'   whether the pairs of attributes with Information Gain equal to zero (on the
+#'   4th decimal) should be pruned. This speeds up calculations for larger
+#'   datasets. By default it is turned off (i.e. set to \code{FALSE}).
 #' @return An interaction graph object (\code{string})
 #' @export
 #' @examples
 #' \dontrun{interactionGraph(golf, "Play")}
 #' \dontrun{interactionGraph(golf, "Play", intNo = 10, speedUp = TRUE)}
+#' @import dplyr
 
 interactionGraph <- function(df, classAtt, intNo = 16, speedUp = FALSE) {
 

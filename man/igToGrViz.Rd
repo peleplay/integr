@@ -24,5 +24,5 @@ Exports Interaction graph to a GraphViz file
 }
 \examples{
 \dontrun{igToGrViz(interactionGraph(golf, "Play", intNo = 10))}
-\dontrun{igToGrViz(interactionGraph(golf, "Play", intNo = 10), path="C:/myFolder", fName = "MyGraph")}
+\dontrun{igToGrViz(interactionGraph(golf, "Play", path= "myFolder", fName = "MyGraph")}
 }
