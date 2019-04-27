@@ -1,7 +1,7 @@
 context("Test Helping Functions")
 
 #Test helping functions for missing/incorrect input parameters ----
-test_that("Helping functions throw error if a parameter is missing/incorrect",{
+test_that("Helping functions throw error if a parameter is missing/incorrect", {
 
   #Test entropy()
   expect_error(entropy())
@@ -30,20 +30,20 @@ test_that("Helping functions throw error if a parameter is missing/incorrect",{
 #Test helping functions for correctness of output ----
 
 #Test entropy()
-test_that("entropy() returns correct value",{
+test_that("entropy() returns correct value", {
   expect_gte(entropy(integr::golf, classAtt = "Play"), 0)
   expect_lte(entropy(integr::golf, classAtt = "Play"), 1)
-  expect_is(entropy(integr::golf, classAtt = "Play"), "double")
+  expect_type(entropy(integr::golf, classAtt = "Play"), "double")
 })
 
 #Test infoGain()
-test_that("infoGain() returns correct value",{
+test_that("infoGain() returns correct value", {
   expect_gte(infoGain(integr::golf, inAtt = "Windy", classAtt = "Play"), 0)
-  expect_lte(entropy(integr::golf, inAtt = "Windy", classAtt = "Play"), 1)
-  expect_is(entropy(integr::golf, inAtt = "Windy", classAtt = "Play"), "double")
+  expect_lte(infoGain(integr::golf, inAtt = "Windy", classAtt = "Play"), 1)
+  expect_type(infoGain(integr::golf, inAtt = "Windy", classAtt = "Play"), "double")
 })
 
 #Test isDiscreteDataFrame()
-test_that("isDiscreteDataFrame() returns correct value",{
+test_that("isDiscreteDataFrame() returns correct value", {
   expect_is(isDiscreteDataFrame(integr::golf), "logical")
 })

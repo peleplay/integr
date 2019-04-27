@@ -13,9 +13,9 @@ test_that("Output functions throw error if a parameter is missing/incorrect", {
   expect_error(igToGrViz())
   expect_error(igToGrViz("ABC"))
   expect_error(igToGrViz(123))
-  expect_error(igToGrViz(interactionGraph(integr::golf, "Play"), path = 123))
-  expect_error(igToGrViz(interactionGraph(integr::golf, "Play"), fName = 123))
-  expect_error(igToGrViz(interactionGraph(integr::golf, "Play"), fName = "A 1"))
+  expect_error(igToGrViz(interactionGraph(integr::golf, "Play"), intNo = 10, path = 123))
+  expect_error(igToGrViz(interactionGraph(integr::golf, "Play"), intNo = 10, fName = 123))
+  expect_error(igToGrViz(interactionGraph(integr::golf, "Play"), intNo = 10, fName = "A 1"))
 
   #Test igToSVG
   expect_error(igToGrSVG())

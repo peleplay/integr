@@ -12,7 +12,6 @@ test_that("interactionGraph() throws an error to invalid input parameters", {
   expect_error(interactionGraph(integr::golf, classAtt = "Play", intNo = TRUE))
   expect_error(interactionGraph(integr::golf, classAtt = "Play", intNo = "A"))
   expect_error(interactionGraph(integr::golf, classAtt = "Play", intNo = A))
-  expect_error(interactionGraph(integr::golf, classAtt = "Play", intNo = c(1, 2)))
   expect_error(interactionGraph(integr::golf, classAtt = "Play", speedUp = "A"))
   expect_error(interactionGraph(integr::golf, classAtt = "Play", speedUp = 1))
   expect_error(interactionGraph(integr::golf, classAtt = "Play", speedUp = A))
