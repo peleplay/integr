@@ -6,8 +6,6 @@ test_that("interactionGraph() throws an error to invalid input parameters", {
   expect_error(interactionGraph(integr::golf))
   expect_error(interactionGraph(integr::golf, classAtt = 1))
   expect_error(interactionGraph(integr::golf, classAtt = TRUE))
-  expect_error(interactionGraph(integr::golf, classAtt = c("A", 1)))
-  expect_error(interactionGraph(integr::golf, classAtt = c("A", "B")))
   expect_error(interactionGraph(integr::golf, classAtt = Play))
   expect_error(interactionGraph(integr::golf, classAtt = "Play", intNo = TRUE))
   expect_error(interactionGraph(integr::golf, classAtt = "Play", intNo = "A"))
@@ -15,7 +13,6 @@ test_that("interactionGraph() throws an error to invalid input parameters", {
   expect_error(interactionGraph(integr::golf, classAtt = "Play", speedUp = "A"))
   expect_error(interactionGraph(integr::golf, classAtt = "Play", speedUp = 1))
   expect_error(interactionGraph(integr::golf, classAtt = "Play", speedUp = A))
-  expect_error(interactionGraph(integr::golf, classAtt = "Play", speedUp = c("A", 1)))
 
   #Test if warnings are thrown for the intNo parameter outside of range
   expect_warning(interactionGraph(integr::golf, classAtt = "Play", intNo = -1))

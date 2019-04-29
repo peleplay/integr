@@ -7,7 +7,6 @@ test_that("Output functions throw error if a parameter is missing/incorrect", {
   expect_error(plotIntGraph())
   expect_error(plotIntGraph("ABC"))
   expect_error(plotIntGraph(123))
-  expect_error(plotIntGraph(c("ABC", 123)))
 
   #Test igToGrViz
   expect_error(igToGrViz())

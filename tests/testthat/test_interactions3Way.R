@@ -9,7 +9,6 @@ test_that("interactions3way() throw an error if input parameters are invalid", {
   expect_error(interactions3Way(integr::golf, classAtt = Play))
   expect_error(interactions3Way(integr::golf, classAtt = 123))
   expect_error(interactions3Way(integr::golf, classAtt = FALSE))
-  expect_error(interactions3Way(integr::golf, classAtt = c("A", 123)))
 })
 
 #Test that interactions3way() return a list[data.frame, listInfoGains] ----
