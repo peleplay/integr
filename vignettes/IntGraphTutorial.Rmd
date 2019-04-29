@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 This vignette provides a step-by-step tutorial for using the Interaction graphs package "integr". The package is an implementation of Aleks Jakulin's Interaction Analysis methodology (http://stat.columbia.edu/~jakulin/Int/) inspired by implementation in Orange 2 data mining software (https://orange.biolab.si/).
 
 #The Concept^[See http://stat.columbia.edu/~jakulin/Int/ for more details on the methodlogy]
-In the context of supervised machine learning, an interaction (i.e statistically relevant dependence) between two attributes $X$ and $Y$, in the presence of the context (i.e. class) atribute $C$, is called **3-way interaction**. A strength of such interaction is measured with **3-way Interaction gain**: $I(X;Y;C) = I(X,Y;C) − I(X;C) − I(Y;C)$. Here, $I(X,Y;C) = I(X,Y|C) = H(X|C) + H(Y|C) − H(X,Y|C)$ is conditional Information gain (i.e. conditional Mutual information) between $X$ and $Y$ in the context $C$, and $I(X;Y) = H(X) + H(Y) − H(X,Y)$ is measure of dependence (i.e. "correlation") between $X$ and $Y$ regardless of context, where $H(X) = P_i \sum_{i}log_{2}P_i$ is Shannon's entropy measured in bits, and $P_i$ the probability of the $i-th$ class; **2-way Interaction gains** of the single attributes $X$ and $Y$ is represented with $I(X;C) = InfoGain_{c}(X) = \sum_{x}\sum_{c}P(x,c)log\frac{P(x,c)}{P(x)P(c)}$ and $I(Y;C) = InfoGain_{c}(Y) = \sum_{y}\sum_{c}P(y,c)log\frac{P(y,c)}{P(y)P(c)}$, respectively.
+In the context of supervised machine learning, an interaction (i.e stbuiatistically relevant dependence) between two attributes $X$ and $Y$, in the presence of the context (i.e. class) atribute $C$, is called **3-way interaction**. A strength of such interaction is measured with **3-way Interaction gain**: $I(X;Y;C) = I(X,Y;C) − I(X;C) − I(Y;C)$. Here, $I(X,Y;C) = I(X,Y|C) = H(X|C) + H(Y|C) − H(X,Y|C)$ is conditional Information gain (i.e. conditional Mutual information) between $X$ and $Y$ in the context $C$, and $I(X;Y) = H(X) + H(Y) − H(X,Y)$ is measure of dependence (i.e. "correlation") between $X$ and $Y$ regardless of context, where $H(X) = P_i \sum_{i}log_{2}P_i$ is Shannon's entropy measured in bits, and $P_i$ the probability of the $i-th$ class; **2-way Interaction gains** of the single attributes $X$ and $Y$ is represented with $I(X;C) = InfoGain_{c}(X) = \sum_{x}\sum_{c}P(x,c)log\frac{P(x,c)}{P(x)P(c)}$ and $I(Y;C) = InfoGain_{c}(Y) = \sum_{y}\sum_{c}P(y,c)log\frac{P(y,c)}{P(y)P(c)}$, respectively.
 
 
 **Interaction graphs** (Figure 1) are a graphical representation of the $k$-most significant 3-way interactions ($2 \leq k \leq 20$). The graph consists of nodes which represent interracting attributes (and their 2-way interactions indicated below the name), and weighted edges which represent the strenght of 3-way interaction. There are two types of edges: 
@@ -58,14 +58,14 @@ First the 'integr' package, and a dataset needs to be loaded. The dataset needs 
 library("integr")
 
 #read Golf toy-dataset
-Golf <- data("golf")
+data("golf")
 ```
 
 ##Generating the interaction graph object
 When the data is loaded, an interaction graph object needs to be created. A data.frame containing the data needs to be provided, as well as the name of the class attribute as a string:
 ```{r, eval=FALSE}
 #create an Interaction graph object
-g <- interactionGraph(Golf, classAtt = "Play", intNo = 10, speedUp = FALSE)
+g <- interactionGraph(golf, classAtt = "Play", intNo = 10, speedUp = FALSE)
 ```
 
 The additional parameters _intNo_ (_integer_) and _speedUp_ (_boolean_) are optional. The first indicates the desired number of interactions to be displayed on the interaction graph (2 <= _intNo_ <= 20, default 16), whilst the latter indicates if during the interactions computation all attributes that have 2-way interaction gain equal to zero (on the 4th decimal) should be pruned; this speeds up computation for larger datasets but it can lead to less precise results so it is turned off (i.e. set to FALSE) by default.
@@ -75,7 +75,7 @@ In case the __intNo__ parameter is set to an inappropriate value (i.e <2, >20 or
 ##Plotting the interaction graph object
 After the interaction graph object has been obtained, it can be plotted using _plotIntGraph()_:
 ```{r, eval=FALSE}
-#plot an Interaction graph object
+#plot an Interaction graph object (in RStudio!)
 plotIntGraph(g)
 ```
 
@@ -143,7 +143,7 @@ _h_ is the desired height of the output image in pixels. If not defined differen
 ###Export to a PS image
 ```{r, eval=FALSE}
 #export an Interaction graph object to a PS image
-igToPDF(g, path = "myFolder", fName = "myInteractionGraph", h = 2000)
+igToPS(g, path = "myFolder", fName = "myInteractionGraph", h = 2000)
 ```
 
 _g_ is the interaction graph object; 
