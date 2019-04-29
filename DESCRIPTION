@@ -8,7 +8,7 @@ Description: An Implementation of Interaction Graphs of Aleks Jakulin
     (http://stat.columbia.edu/~jakulin/Int/). It generates a GraphViz graph of 
     3-way interactions (i.e. conditional Information Gain) based on a provided 
     discrete data.frame. Various output formats are supported (Graphviz, SVG, 
-    PNG, PSD, PS).
+    PNG, PDF, PS).
 Depends: 
     R (>= 3.5.0),
     dplyr (>= 0.7.6),
