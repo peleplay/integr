@@ -14,16 +14,34 @@
 
 entropy <- function(df, classAtt) {
 
+  #Check input validity
+  if (missing(df)) { #df param is missing
+    stop("Please provide a discrete data.frame object to the function")
+  }
+
+  if (missing(classAtt)) { #classAtt param is missing
+    stop("Please provide the classAtt parameter")
+  }
+
   #Check if classAtt is a string
-  if(typeof(classAtt) != "character"){
+  if(typeof(classAtt) != "character"){ #classAtt is not a string
     stop("classAtt parameter needs to be string")
   }
 
-  freq <- table(df[classAtt]) #vector of class frequencies
-  prob <- round(freq / sum(freq), 3) #vector of class probabilities
-  logs <- log2(prob) * (-1) #vector of logarithms of class probabilities
-  entr <- sum(prob * logs) #overall entropy
-  return(entr)
+  #check if df is discrete
+  if (isDiscreteDataFrame(df)) { #df is discrete, proceed
+    freq <- table(df[classAtt]) #vector of class frequencies
+    prob <- round(freq / sum(freq), 3) #vector of class probabilities
+    logs <- log2(prob) * (-1) #vector of logarithms of class probabilities
+    entr <- sum(prob * logs) #overall entropy
+    return(entr)
+  }
+
+  #not a discrete df, throw an error
+  else {
+    stop("The provided data.frame is not discrete (i.e. one of its columns
+         is not factor)!")
+  }
 }
 
 #' Calculates Information Gain (2-way Interaction Gain) of a discrete data.frame
@@ -44,36 +62,72 @@ entropy <- function(df, classAtt) {
 #' @import dplyr
 
 infoGain <- function(df, inAtt, classAtt) {
-  apr <- entropy(df, classAtt) #a-priori entropy of the df
 
-  #Frequency table for the new attribute
-  freqA <- df %>%
-           dplyr::group_by(!!as.symbol(inAtt)) %>%
-           dplyr::count(!!as.symbol(classAtt))
+  #Check input validity
+  if (missing(df)) { #df param is missing
+    stop("Please provide a discrete data.frame object to the function")
+  }
 
-  #Frequency table for the class attribute
-  freqB <- freqA %>%
-           dplyr::group_by(!!as.symbol(inAtt)) %>%
-           dplyr::summarise(classCount = sum(n))
+  if (missing(inAtt)) { #inAtt param is missing
+    stop("Please provide the inAtt parameter")
+  }
 
-  #Overall frequency table
-  freqC <- dplyr::inner_join(freqA, freqB, by = inAtt) #'by' argument is char!
-  freqC$probs <- round(freqC$n/freqC$classCount, 3) #Calculate probabilities
-  freqC$logs <- freqC$probs * log2(freqC$probs) * (-1) #Calculate logarithms
+  if (missing(classAtt)) { #classAtt param is missing
+    stop("Please provide the classAtt parameter")
+  }
 
-  #Upper level entropy components
-  logs <- NULL #supress R CMD Check note on "undefined global variable 'logs'"
-  freqB$entrs <- freqC %>%
-                 dplyr::group_by(!!as.symbol(inAtt)) %>%
-                 dplyr::summarise(entrs = sum(logs))
-  freqB$weight <- round(freqB$classCount / sum(freqB$classCount), 3)
+  #Check if inAtt is a string
+  if(typeof(inAtt) != "character"){ #inAtt is not a string
+    stop("inAtt parameter needs to be string")
+  }
 
-  #Overall entropy
-  entr <- sum(freqB$weight * freqB$entrs$entrs)
+  #Check if classAtt is a string
+  if(typeof(classAtt) != "character"){ #classAtt is not a string
+    stop("classAtt parameter needs to be string")
+  }
 
-  #Information gain
-  infgn <- apr - entr
-  return(infgn)
+  #check if df is discrete
+  if (isDiscreteDataFrame(df)) { #df is discrete, proceed
+
+    #a-priori entropy of the df
+    apr <- entropy(df, classAtt)
+
+    #Frequency table for the new attribute
+    freqA <- df %>%
+             dplyr::group_by(!!as.symbol(inAtt)) %>%
+             dplyr::count(!!as.symbol(classAtt))
+
+    #Frequency table for the class attribute
+    freqB <- freqA %>%
+             dplyr::group_by(!!as.symbol(inAtt)) %>%
+             dplyr::summarise(classCount = sum(n))
+
+    #Overall frequency table
+    freqC <- dplyr::inner_join(freqA, freqB, by = inAtt) #'by' argument is char!
+    freqC$probs <- round(freqC$n/freqC$classCount, 3) #Calculate probabilities
+    freqC$logs <- freqC$probs * log2(freqC$probs) * (-1) #Calculate logarithms
+
+    #Upper level entropy components
+    logs <- NULL #supress R CMD Check note on "undefined global variable 'logs'"
+    freqB$entrs <- freqC %>%
+                   dplyr::group_by(!!as.symbol(inAtt)) %>%
+                   dplyr::summarise(entrs = sum(logs))
+    freqB$weight <- round(freqB$classCount / sum(freqB$classCount), 3)
+
+    #Overall entropy
+    entr <- sum(freqB$weight * freqB$entrs$entrs)
+
+    #Information gain
+    infgn <- apr - entr
+    return(infgn)
+  }
+
+  #not a discrete df, throw an error
+  else {
+    stop("The provided data.frame is not discrete (i.e. one of its columns
+         is not factor)!")
+  }
+
 }
 
 #' Tests if data.frame is discrete (i.e. all of its columns are factors)
