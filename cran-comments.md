@@ -8,5 +8,4 @@
 There were no ERRORs, no WARNINGs, no NOTEs
 
 ## Downstream dependencies
-I have also run R CMD Check on downstream dependencies of integr.
-All packages were installed.
+Currently there are no downstream dependencies.
