@@ -4,11 +4,11 @@ Title: An Implementation of Interaction Graphs of Aleks Jakulin
 Version: 1.0.0
 Authors@R: person("Petar", "Markovic", email = "peleplay@gmail.com",
                   role = c("aut", "cre"))
-Description: An Implementation of Interaction Graphs of Aleks Jakulin
-    <http://stat.columbia.edu/~jakulin/Int/>. It generates a Graphviz graph of 
-    3-way interactions (i.e. conditional Information Gain) based on a provided 
-    discrete data.frame. Various output formats are supported (Graphviz, SVG, 
-    PNG, PDF, PS).
+Description: Generates a 'Graphviz' graph of the most significant 3-way 
+    interaction gains (i.e. conditional information gains) based on a provided 
+    discrete data frame. Various output formats are supported ('Graphviz', SVG, 
+    PNG, PDF, PS). For references, see the webpage of Aleks Jakulin 
+    <http://stat.columbia.edu/~jakulin/Int/>.
 Depends: 
     R (>= 3.5.0),
     dplyr (>= 0.7.6),

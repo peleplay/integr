@@ -19,5 +19,5 @@ isDiscreteDataFrame(df)
 Tests if data.frame is discrete (i.e. all of its columns are factors)
 }
 \examples{
-\dontrun{isDiscreteDataFrame(golf)}
+isDiscreteDataFrame(golf)
 }

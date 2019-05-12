@@ -17,7 +17,7 @@ whether the pairs of attributes with Information Gain equal to zero (on the
 datasets. By default it is turned off (i.e. set to \code{FALSE}).}
 }
 \value{
-A list with a: 1) data-frame with 3-way interactions, 2)list of 2-way
+A list with a: 1) data frame with 3-way interactions, 2)list of 2-way
   interactions of the input attributes
 }
 \description{
@@ -29,7 +29,7 @@ context (i.e. class) attribute \eqn{C}. Hence, \eqn{I(X,Y;C)} is a joint
 (i.e. Information Gains) of the attributes \eqn{X} and \eqn{Y}, respectively.
 }
 \examples{
-\dontrun{interactions3Way(golf, "Play")}
-\dontrun{interactions3Way(golf, "Play", speedUp = TRUE)}
-\dontrun{interactions3Way(golf, "Play", speedUp = FALSE)}
+interactions3Way(golf, "Play")
+\donttest{interactions3Way(golf, "Play", speedUp = TRUE)}
+\donttest{interactions3Way(golf, "Play", speedUp = FALSE)}
 }

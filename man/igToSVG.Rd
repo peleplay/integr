@@ -4,13 +4,12 @@
 \alias{igToSVG}
 \title{Exports Interaction graph to a SVG file}
 \usage{
-igToSVG(ig, path = getwd(), fName = "InteractionGraph", h = 2000)
+igToSVG(ig, path = "", fName = "InteractionGraph", h = 2000)
 }
 \arguments{
 \item{ig}{Interaction graph}
 
-\item{path}{The folder in which to write the SVG file; by default,
-the working directory}
+\item{path}{The folder in which to write the SVG file;}
 
 \item{fName}{The name of the file to be created; "InteractionGraph" by
 default}
@@ -25,12 +24,12 @@ Writes the \code{ig} interaction graph to a SVG (\code{.svg}) file
 Exports Interaction graph to a SVG file
 }
 \examples{
-\dontrun{
+#create temp dir path with slashes
+myDir <- gsub("\\\\\\\\", "/", tempdir())
+
+#create interaction graph
 g <- interactionGraph(golf, "Play", intNo = 10)
-igToSVG(g)
-}
-\dontrun{
-g <- interactionGraph(golf, "Play", intNo = 10)
-igToSVG(g, path = "C:/myFolder", fName = "MyGraph", h = 2000)
-}
+
+#write to SVG
+igToSVG(g, path = myDir, fName = "MyGraph", h = 2000)
 }

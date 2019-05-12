@@ -26,6 +26,7 @@ An interaction graph object (\code{string})
 Creates Interaction graph
 }
 \examples{
-\dontrun{interactionGraph(golf, "Play")}
-\dontrun{interactionGraph(golf, "Play", intNo = 10, speedUp = TRUE)}
+interactionGraph(golf, "Play", intNo = 10)
+\donttest{interactionGraph(golf, "Play", intNo = 10, speedUp = FALSE)}
+\donttest{interactionGraph(golf, "Play", intNo = 10, speedUp = TRUE)}
 }

@@ -24,5 +24,7 @@ introduced, and \eqn{H(S|X)} is the entropy of the system after the attribute
 \eqn{X} has been introduced.
 }
 \examples{
-\dontrun{infoGain(golf, "Wind", "Play")}
+infoGain(golf, "Windy", "Play")
+\donttest{
+infoGain(golf, "Outlook", "Play")}
 }

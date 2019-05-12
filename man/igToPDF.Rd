@@ -4,16 +4,15 @@
 \alias{igToPDF}
 \title{Exports Interaction graph to a PDF file}
 \usage{
-igToPDF(ig, fName = "InteractionGraph", path = getwd(), h = 2000)
+igToPDF(ig, path = "", fName = "InteractionGraph", h = 2000)
 }
 \arguments{
 \item{ig}{Interaction graph}
 
+\item{path}{The folder in which to write the PDF file;}
+
 \item{fName}{The name of the file to be created; "InteractionGraph" by
 default}
-
-\item{path}{The folder in which to write the PDF file; by default,
-the working directory}
 
 \item{h}{Desired height of the image in pixels; 2000px by default}
 }
@@ -25,12 +24,12 @@ Writes the \code{ig} interaction graph to a PDF (\code{.pdf}) file
 Exports Interaction graph to a PDF file
 }
 \examples{
-\dontrun{
+#create temp dir path with slashes
+myDir <- gsub("\\\\\\\\", "/", tempdir())
+
+#create interaction graph
 g <- interactionGraph(golf, "Play", intNo = 10)
-igToPDF(g)
-}
-\dontrun{
-g <- interactionGraph(golf, "Play", intNo = 10)
-igToPDF(g, path = "C:/myFolder", fName = "MyGraph", h = 2000)
-}
+
+#write to PDF
+igToPDF(g, path = myDir, fName = "MyGraph", h = 2000)
 }

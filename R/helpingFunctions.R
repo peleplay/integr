@@ -8,7 +8,7 @@
 #' @return The Shannon's entropy of the \code{df}, based on the \code{classAtt}
 #'   attribute
 #' @examples
-#' \dontrun{entropy(golf, "Play")}
+#' entropy(golf, "Play")
 #' @export
 #' @import dplyr
 
@@ -57,7 +57,9 @@ entropy <- function(df, classAtt) {
 #' @return The Information Gain of \code{df} on the class attribute
 #'   \code{classAtt}
 #' @examples
-#' \dontrun{infoGain(golf, "Wind", "Play")}
+#' infoGain(golf, "Windy", "Play")
+#' \donttest{
+#' infoGain(golf, "Outlook", "Play")}
 #' @export
 #' @import dplyr
 
@@ -138,7 +140,8 @@ infoGain <- function(df, inAtt, classAtt) {
 #'   object is of other type than \code{data.frame}, the function throws an
 #'   error.
 #' @examples
-#' \dontrun{isDiscreteDataFrame(golf)}
+#' isDiscreteDataFrame(golf)
+#' @export
 
 isDiscreteDataFrame <- function(df) {
 

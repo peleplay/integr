@@ -4,13 +4,12 @@
 \alias{igToGrViz}
 \title{Exports Interaction graph to a GraphViz file}
 \usage{
-igToGrViz(ig, path = getwd(), fName = "InteractionGraph")
+igToGrViz(ig, path = "", fName = "InteractionGraph")
 }
 \arguments{
 \item{ig}{Interaction graph}
 
-\item{path}{The folder in which to write the GraphViz file; by default, the
-working directory}
+\item{path}{The folder in which to write the GraphViz file;}
 
 \item{fName}{The name of the file to be created; "InteractionGraph" by
 default}
@@ -23,6 +22,12 @@ Writes the \code{ig} interaction graph to a GraphViz \code{.gv} file
 Exports Interaction graph to a GraphViz file
 }
 \examples{
-\dontrun{igToGrViz(interactionGraph(golf, "Play", intNo = 10))}
-\dontrun{igToGrViz(interactionGraph(golf, "Play", path= "myFolder", fName = "MyGraph")}
+#create temp dir path with slashes
+myDir <- gsub("\\\\\\\\", "/", tempdir())
+
+#create interaction graph
+g <- interactionGraph(golf, "Play", intNo = 10)
+
+#write to 'graphviz' file
+igToGrViz(g, path = myDir, fName = "MyGraph")
 }

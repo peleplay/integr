@@ -16,5 +16,5 @@ Plots the \code{ig}
 Plots Interaction graph
 }
 \examples{
-\dontrun{plotIntGraph(interactionGraph(golf, "Play", intNo = 10))}
+plotIntGraph(interactionGraph(golf, "Play", intNo = 10))
 }

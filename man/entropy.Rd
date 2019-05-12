@@ -20,5 +20,5 @@ Formula: \eqn{H(S) = -P_i * \sum log_2 * P_i}, where \eqn{P_i} is the
 probability of the corresponding \eqn{i}-th class
 }
 \examples{
-\dontrun{entropy(golf, "Play")}
+entropy(golf, "Play")
 }

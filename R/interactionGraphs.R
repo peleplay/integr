@@ -271,13 +271,13 @@ toString.ig <- function(intGraph) {
 #'   whether the pairs of attributes with Information Gain equal to zero (on the
 #'   4th decimal) should be pruned. This speeds up calculations for larger
 #'   datasets. By default it is turned off (i.e. set to \code{FALSE}).
-#' @return A list with a: 1) data-frame with 3-way interactions, 2)list of 2-way
+#' @return A list with a: 1) data frame with 3-way interactions, 2)list of 2-way
 #'   interactions of the input attributes
 #' @export
 #' @examples
-#' \dontrun{interactions3Way(golf, "Play")}
-#' \dontrun{interactions3Way(golf, "Play", speedUp = TRUE)}
-#' \dontrun{interactions3Way(golf, "Play", speedUp = FALSE)}
+#' interactions3Way(golf, "Play")
+#' \donttest{interactions3Way(golf, "Play", speedUp = TRUE)}
+#' \donttest{interactions3Way(golf, "Play", speedUp = FALSE)}
 #' @import dplyr gtools utils
 
 interactions3Way <- function(df, classAtt, speedUp = FALSE){
@@ -390,8 +390,9 @@ interactions3Way <- function(df, classAtt, speedUp = FALSE){
 #' @return An interaction graph object (\code{string})
 #' @export
 #' @examples
-#' \dontrun{interactionGraph(golf, "Play")}
-#' \dontrun{interactionGraph(golf, "Play", intNo = 10, speedUp = TRUE)}
+#' interactionGraph(golf, "Play", intNo = 10)
+#' \donttest{interactionGraph(golf, "Play", intNo = 10, speedUp = FALSE)}
+#' \donttest{interactionGraph(golf, "Play", intNo = 10, speedUp = TRUE)}
 #' @import dplyr
 
 interactionGraph <- function(df, classAtt, intNo = 16, speedUp = FALSE) {
