@@ -16,10 +16,10 @@ knitr::opts_chunk$set(
 )
 ```
 
-#Introduction
+# Introduction
 This vignette provides a step-by-step tutorial for using the Interaction graphs package "integr". The package is an implementation of Aleks Jakulin's Interaction Analysis methodology (http://stat.columbia.edu/~jakulin/Int/) inspired by implementation in Orange 2 data mining software (https://orange.biolab.si/).
 
-#The Concept^[See http://stat.columbia.edu/~jakulin/Int/ for more details on the methodology]
+# The Concept^[See http://stat.columbia.edu/~jakulin/Int/ for more details on the methodology]
 In the context of supervised machine learning, an interaction (i.e statistically relevant dependence) between two attributes $X$ and $Y$, in the presence of the context (i.e. class) atribute $C$, is called **3-way interaction**. A strength of such interaction is measured with **3-way Interaction gain**: $I(X;Y;C) = I(X,Y;C) − I(X;C) − I(Y;C)$. Here, $I(X,Y;C) = I(X,Y|C) = H(X|C) + H(Y|C) − H(X,Y|C)$ is conditional Information gain (i.e. conditional Mutual information) between $X$ and $Y$ in the context $C$, and $I(X;Y) = H(X) + H(Y) − H(X,Y)$ is measure of dependence (i.e. "correlation") between $X$ and $Y$ regardless of context, where $H(X) = P_i \sum_{i}log_{2}P_i$ is Shannon's entropy measured in bits, and $P_i$ the probability of the $i-th$ class; **2-way Interaction gains** of the single attributes $X$ and $Y$ is represented with $I(X;C) = InfoGain_{c}(X) = \sum_{x}\sum_{c}P(x,c)log\frac{P(x,c)}{P(x)P(c)}$ and $I(Y;C) = InfoGain_{c}(Y) = \sum_{y}\sum_{c}P(y,c)log\frac{P(y,c)}{P(y)P(c)}$, respectively.
 
 
@@ -35,7 +35,7 @@ integr::plotIntGraph(integr::interactionGraph(integr::golf, classAtt = "Play", i
 
 Hence, interaction graphs can be used as a tool for understanding the most important interactions and selection of the attributes suitable for grouping/including in a machine learning model.
 
-#The toy-data description
+# The toy-data description
 In this tutorial, the **'Golf'** toy-dataset will be used. It is included in the package, and its structure is presented in the Table below. It represents a 14-row discrete data.frame (i.e. all columns are factors) with 6 discrete attributes of which 5 are input, and 1 is the class attribute. The input attributes are used to determine whether a game of golf was played given the conditions, and the decision is recorded in the class attribute:
 
 * __Outlook:__ values: Overcast, Rainy, Sunny (_input attribute_)
@@ -49,9 +49,9 @@ In this tutorial, the **'Golf'** toy-dataset will be used. It is included in the
 knitr::kable(integr::golf)
 ```
 
-#Step-by-step tutorial
+# Step-by-step tutorial
 
-##Reading the data
+## Reading the data
 First the 'integr' package, and a dataset needs to be loaded. The dataset needs to be discrete, and to have a class attribute. Here the 'Golf' toy-dataset will be used:
 ```{r, eval=FALSE}
 #load integr package (needs to be installed first!)
@@ -61,7 +61,7 @@ library("integr")
 data("golf")
 ```
 
-##Generating the interaction graph object
+## Generating the interaction graph object
 When the data is loaded, an interaction graph object needs to be created. A data.frame containing the data needs to be provided, as well as the name of the class attribute as a string:
 ```{r, eval=FALSE}
 #create an Interaction graph object
@@ -72,7 +72,7 @@ The additional parameters _intNo_ (_integer_) and _speedUp_ (_boolean_) are opti
 
 In case the __intNo__ parameter is set to an inappropriate value (i.e <2, >20 or larger than theoretically possible number of interactions for the given dataset) it is automatically adjusted to fit and a warning message is printed.
 
-##Plotting the interaction graph object
+## Plotting the interaction graph object
 After the interaction graph object has been obtained, it can be plotted using _plotIntGraph()_:
 ```{r, eval=FALSE}
 #plot an Interaction graph object (in RStudio!)
@@ -83,10 +83,10 @@ It only requires an interaction graph object as an input. Here the result of the
 
 The result of this comand is Figure 1.
 
-##Exporting the interaction graph object
+## Exporting the interaction graph object
 Integr package allows interaction graphs to be export to a binary file. The supported formats are: a Graphviz graph, SVG image, PNG image, PostScript (PS) file, or PDF. The code for exporting the corresponding binary file is provided below.
 
-###Export to a Graphviz binary file
+### Export to a Graphviz binary file
 ```{r, eval=FALSE}
 #export an Interaction graph object to a Graphviz file
 igToGrViz(g, path = "myFolder", fName = "myInteractionGraph")
@@ -98,7 +98,7 @@ _path_ parameter is a string indicating the path (folder) in which the output sh
 
 _fName_ parameter is a string indicating the name of the output. It should be defined without extension and without spaces. If not specified differently, 'InteractionGraph' by default.
 
-###Export to  a SVG image
+### Export to  a SVG image
 ```{r, eval=FALSE}
 #export an Interaction graph object to a SVG image
 igToSVG(g, path = "myFolder", fName = "myInteractionGraph", h = 2000)
@@ -112,7 +112,7 @@ _fName_ parameter is a string indicating the name of the output. It should be de
 
 _h_ is the desired height of the output image in pixels. If not defined differently, 2000 by default.
 
-###Export to a PNG image
+### Export to a PNG image
 ```{r, eval=FALSE}
 #export an Interaction graph object to a PNG image
 igToPNG(g, path = "myFolder", fName = "myInteractionGraph", h = 2000)
@@ -126,7 +126,7 @@ _fName_ parameter is a string indicating the name of the output. It should be de
 
 _h_ is the desired height of the output image in pixels. If not defined differently, 2000 by default.
 
-###Export to a PDF image
+### Export to a PDF image
 ```{r, eval=FALSE}
 #export an Interaction graph object to a PDF image
 igToPDF(g, path = "myFolder", fName = "myInteractionGraph", h = 2000)
@@ -140,7 +140,7 @@ _fName_ parameter is a string indicating the name of the output. It should be de
 
 _h_ is the desired height of the output image in pixels. If not defined differently, 2000 by default.
 
-###Export to a PS image
+### Export to a PS image
 ```{r, eval=FALSE}
 #export an Interaction graph object to a PS image
 igToPS(g, path = "myFolder", fName = "myInteractionGraph", h = 2000)
