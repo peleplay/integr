@@ -94,7 +94,7 @@ igToGrViz(g, path = "myFolder", fName = "myInteractionGraph")
 
 _g_ is the interaction graph object; 
 
-_path_ parameter is a string indicating the path (folder) in which the output should be saved. If not specified differently, working directory by default;
+_path_ parameter is a string indicating the path (folder) in which the output should be saved.
 
 _fName_ parameter is a string indicating the name of the output. It should be defined without extension and without spaces. If not specified differently, 'InteractionGraph' by default.
 
@@ -106,7 +106,7 @@ igToSVG(g, path = "myFolder", fName = "myInteractionGraph", h = 2000)
 
 _g_ is the interaction graph object; 
 
-_path_ parameter is a string indicating the path (folder) in which the output should be saved. If not specified differently, working directory by default;
+_path_ parameter is a string indicating the path (folder) in which the output should be saved. 
 
 _fName_ parameter is a string indicating the name of the output. It should be defined without extension and without spaces. If not specified differently, 'InteractionGraph' by default;
 
@@ -120,7 +120,7 @@ igToPNG(g, path = "myFolder", fName = "myInteractionGraph", h = 2000)
 
 _g_ is the interaction graph object; 
 
-_path_ parameter is a string indicating the path (folder) in which the output should be saved. If not specified differently, working directory by default;
+_path_ parameter is a string indicating the path (folder) in which the output should be saved.
 
 _fName_ parameter is a string indicating the name of the output. It should be defined without extension and without spaces. If not specified differently, 'InteractionGraph' by default;
 
@@ -134,7 +134,7 @@ igToPDF(g, path = "myFolder", fName = "myInteractionGraph", h = 2000)
 
 _g_ is the interaction graph object; 
 
-_path_ parameter is a string indicating the path (folder) in which the output should be saved. If not specified differently, working directory by default;
+_path_ parameter is a string indicating the path (folder) in which the output should be saved. 
 
 _fName_ parameter is a string indicating the name of the output. It should be defined without extension and without spaces. If not specified differently, 'InteractionGraph' by default;
 
@@ -148,7 +148,7 @@ igToPS(g, path = "myFolder", fName = "myInteractionGraph", h = 2000)
 
 _g_ is the interaction graph object; 
 
-_path_ parameter is a string indicating the path (folder) in which the output should be saved. If not specified differently, working directory by default;
+_path_ parameter is a string indicating the path (folder) in which the output should be saved. 
 
 _fName_ parameter is a string indicating the name of the output. It should be defined without extension and without spaces. If not specified differently, 'InteractionGraph' by default;
 

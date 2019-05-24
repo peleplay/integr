@@ -80,8 +80,7 @@ igToPS(g, path = "myFolder", fName = "myInteractionGraph", h = 2000)
 ```
 
 *path* parameter is a string indicating the path (folder) in which the
-output should be saved. If not specified differently, working directory
-by default;
+output should be saved.
 
 *fName* parameter is a string indicating the name of the output. It
 should be defined without extension and without spaces. If not specified
